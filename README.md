@@ -99,8 +99,6 @@ HealWell+ is a comprehensive healthcare management platform designed to connect 
 
 ![Screenshot (1114)](https://github.com/user-attachments/assets/1df98cfd-1949-4aa2-be06-171cd580acd3)
 
-![Screenshot (1115)](https://github.com/user-attachments/assets/7d16410e-ae78-4b0f-aab5-d8b6e182a31a)
-
 ![Screenshot (1116)](https://github.com/user-attachments/assets/80bf6083-655b-4028-afcf-7c3de8918575)
 
 ![Screenshot (1118)](https://github.com/user-attachments/assets/895af8bd-d8e0-4cc6-abcd-e5d280b3f8a9)
