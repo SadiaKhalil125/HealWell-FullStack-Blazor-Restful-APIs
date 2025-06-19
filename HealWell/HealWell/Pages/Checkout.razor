@@ -1,0 +1,56 @@
+﻿@page "/checkout/{appointmentId:int}"
+@inherits LayoutComponentBase
+
+@inject NavigationManager NavigationManager
+
+
+
+<Header></Header>
+
+<div style="background-color:#FAFAFA">
+
+    <!-- Checkout Header -->
+    <section class="checkout-header">
+        <div class="container">
+            <h1>Complete Your Payment</h1>
+            <div class="checkout-steps">
+                <div class="step completed">
+                    <span><i class="fas fa-check"></i></span>
+                    <p>Appointment</p>
+                </div>
+                <div class="step active">
+                    <span>2</span>
+                    <p>Payment</p>
+                </div>
+                <div class="step">
+                    <span>3</span>
+                    <p>Confirmation</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Checkout Section -->
+    <section class="checkout-section">
+        <div class="container">
+            <div class="row">
+                <!-- Payment Form Component -->
+                <div class="col-md-7">
+                    <PaymentInformation AppointmentId="@appointmentId"/>
+                </div>
+
+                <!-- Appointment Summary Component -->
+                <div class="col-md-5">
+                    <AppointmentSummary AppointmentId="@appointmentId" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<Footer></Footer>
+
+@code {
+    [Parameter] public int appointmentId { get; set; }
+}

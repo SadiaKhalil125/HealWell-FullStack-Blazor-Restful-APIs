@@ -1,0 +1,151 @@
+﻿@page "/services"
+@inject NavigationManager Navigation
+@using HealWell.Services
+@using HealWell.Models
+@inject DoctorService doctorservice
+@inject PatientService patientservice
+<Header></Header>
+<section class="services-hero">
+    <div class="container">
+        <h1 class="wow fadeInUp">Our Healthcare Services</h1>
+        <p class="wow fadeInUp" data-wow-delay="0.2s">Comprehensive medical care designed for your needs</p>
+    </div>
+</section>
+
+<section class="services-section">
+    <div class="container">
+        <div class="section-header wow fadeInUp">
+            <h2>Specialized Services</h2>
+            <p>Expert care across all major medical disciplines</p>
+        </div>
+
+        <div class="row">
+            @foreach (var service in services)
+            {
+                <div class="col-lg-4 col-md-6 mb-4 wow fadeInUp">
+                    <div class="service-card" @onclick="() => NavigateToService(service.Id)">
+                        <div class="service-icon">
+                            <i class="@service.Icon"></i>
+                        </div>
+                        <div class="service-content" style="display:flex; flex-direction:column">
+                            <h3>@service.Name</h3>
+                            <p>@service.Description</p>
+                            <div class="service-link">
+                                Learn more <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<section class="emergency-section">
+    <div class="container">
+        <div class="emergency-banner wow fadeIn">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h2>24/7 Emergency Care</h2>
+                    <p>Immediate medical attention when you need it most</p>
+                </div>
+                <div class="col-md-4 text-md-right">
+                    <a href="tel:+18005551234" class="emergency-btn">
+                        <i class="fas fa-phone-alt"></i> Call Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="how-it-works">
+    <div class="container">
+        <div class="section-header wow fadeInUp">
+            <h2>How Our Services Work</h2>
+            <p>Simple steps to better health</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 wow fadeInUp">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3 style="color: #0d47a1 !important">Schedule Appointment</h3>
+                    <p>Book online or call our reception for an in-person or virtual consultation</p>
+                </div>
+            </div>
+            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.2s">
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3 style="color: #0d47a1 !important">Consult with Specialist</h3>
+                    <p>Meet with our board-certified physicians for diagnosis and treatment</p>
+                </div>
+            </div>
+            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.4s">
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3 style="color: #0d47a1 !important">Receive Ongoing Care</h3>
+                    <p>Get follow-up care and personalized treatment plans</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="testimonials-section">
+    <div class="container">
+        <div class="section-header wow fadeInUp">
+            <h2>Patient Experiences</h2>
+            <p>What our patients say about our services</p>
+        </div>
+
+        <div class="row">
+            @foreach (var testimonial in testimonials)
+            {
+                <div class="col-md-4 wow fadeInUp">
+                    <div class="testimonial-card" style=" display: flex; flex-direction: column; justify-content: space-between; padding: 20px;">
+
+                        <div class="quote-icon" style="font-size: 24px; color: #ccc; margin-bottom: 10px;">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+
+                        <div style="flex-grow: 1;">
+                            <p style="font-style: italic; color: #333;">@testimonial.Comment</p>
+                        </div>
+
+                        <div class="patient-info" style="margin-top: 20px; display: flex !important; flex-direction: column !important; align-items: center !important; text-align: center !important;">
+                            <img src="@testimonial.ImageUrl"
+                                 alt="@testimonial.Name"
+                                 style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 10px;" />
+
+                            <h4 style="margin: 0; font-weight: bold;">@testimonial.Name</h4>
+                            <p style="margin: 0; color: #777;">@testimonial.ServiceUsed</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</section>
+<Footer></Footer>
+@code {
+    private List<Service> services = new();
+    private List<Testimonial> testimonials = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        services = await doctorservice.GetAllServices();
+        // Load services data
+
+        // Load testimonials data
+        testimonials = await patientservice.GetTestimonials();
+       
+    }
+
+    private void NavigateToService(int serviceId)
+    {
+        Navigation.NavigateTo($"/services/{serviceId}");
+    }
+
+}

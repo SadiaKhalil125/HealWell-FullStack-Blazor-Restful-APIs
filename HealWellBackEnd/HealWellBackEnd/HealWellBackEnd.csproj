@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\images\04dcd819-b133-495d-a9f7-f9858968e379.jpg" />
+    <Content Remove="wwwroot\images\08400107-0187-48e1-bbe0-3524bfd1351d.jpg" />
+    <Content Remove="wwwroot\images\3747a074-bede-478c-a2de-128532675974.jpg" />
+    <Content Remove="wwwroot\images\bd9468c6-e4c2-46c3-b4b0-7bab092a5f72.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.16" />
+    <PackageReference Include="Microsoft.AspNetCore.OData" Version="9.3.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\images\04dcd819-b133-495d-a9f7-f9858968e379.jpg" />
+    <None Include="wwwroot\images\08400107-0187-48e1-bbe0-3524bfd1351d.jpg" />
+    <None Include="wwwroot\images\3747a074-bede-478c-a2de-128532675974.jpg" />
+    <None Include="wwwroot\images\bd9468c6-e4c2-46c3-b4b0-7bab092a5f72.jpg" />
+  </ItemGroup>
+
+</Project>

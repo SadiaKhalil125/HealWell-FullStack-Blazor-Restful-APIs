@@ -1,0 +1,27 @@
+﻿@using HealWell.Models
+@inject NavigationManager Navigation
+<div class="doctor-card" style="border: 1px solid #ddd; border-radius: 10px; overflow: hidden; height: 500px; background-color: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.1); display: flex; flex-direction: column;">
+    <div class="doctor-image" style="border-radius:0% !important; width: 100% !important; height: 250px !important;">
+        <img src="@Doctor.ImageUrl" alt="@Doctor.Name" style="width: 100% !important; height: 100% !important; object-fit: cover !important; border-radius: 0 !important;" />
+    </div>
+
+    <div class="doctor-info" style="display: flex; flex-direction: column; align-items: center; padding: 15px; text-align: center;">
+        <h5 style="margin-bottom: 5px; color: #1A237E; font-size: 25px;"><strong>@Doctor.Name</strong></h5>
+        <p style="margin: 0; font-size: 14px; color: #555;">@Doctor.Specialty</p>
+        <div style="display: flex; align-items: center; gap: 6px; margin: 8px 0;">
+            <div style="display: flex;">
+                @for (int i = 0; i < 5; i++)
+                {
+                    <i class="fas @(i < Doctor.Rating ? "fa-star" : "fa-star-half-alt")" style="color: gold; margin: 0 1px;"></i>
+                }
+            </div>
+            <span style="font-size: 12px; color: #777;">(@Doctor.ReviewCount reviews)</span>
+        </div>
+        <p style="margin: 0 0 10px 0; font-size: 13px; color: #444;">@Doctor.Hospital</p>
+        <a @onclick="@(()=>Navigation.NavigateTo($"/doctor/{Doctor.Id}"))" style="background-color:#00897b;font-weight:bold; border:0px; color:white" class="btn btn-primary w-100 mt-2" >View Profile </a>
+    </div>
+</div>
+@code {
+    [Parameter]
+    public Doctor Doctor { get; set; }
+}

@@ -1,0 +1,201 @@
+﻿@page "/patient-analytics"
+@inject IJSRuntime JS
+@using System.ComponentModel.DataAnnotations
+@inject NavigationManager Navigation
+@using HealWell.Services
+@using HealWell.Models
+@inject PatientService patientservice
+@inject AppointmentService appointmentservice
+<Header></Header>
+
+<div class="admin-dashboard">
+    <!-- Header -->
+    <div class="admin-header">
+        <h1><i class="fas fa-user-injured"></i> Patient Analytics</h1>
+        <div class="admin-actions">
+            <div class="date-range-picker">
+                <i style="color:black !important" class="fas fa-calendar-alt"></i>
+                <select @bind="timeRange">
+                    <option value="7">Last 7 Days</option>
+                    <option value="30">Last 30 Days</option>
+                    <option value="90">Last 90 Days</option>
+                    <option value="365">Last Year</option>
+                    <option value="0">All Time</option>
+                </select>
+            </div>
+            <button class="admin-btn" @onclick="ExportData">
+                <i class="fas fa-file-export"></i> Export
+            </button>
+        </div>
+    </div>
+
+    <!-- Key Metrics -->
+    <div class="metrics-grid">
+        <!-- Total Patients -->
+        <div class="metric-card">
+            <div class="metric-value">@totalPatients</div>
+            <div class="metric-label">Total Patients</div>
+            <div class="metric-trend @(patientGrowth > 0 ? "up" : patientGrowth < 0 ? "down" : "")">
+                @if (patientGrowth > 0)
+                {
+                    <i class="fas fa-arrow-up"></i> @patientGrowth
+                }
+                else if (patientGrowth < 0)
+                {
+                    <i class="fas fa-arrow-down"></i> @Math.Abs(patientGrowth)
+                }
+                else
+                {
+                    <i class="fas fa-equals"></i>
+                }
+            </div>
+        </div>
+
+        <!-- New Patients -->
+        <div class="metric-card">
+            <div class="metric-value">@totalAppointments</div>
+            <div class="metric-label">Patients' Appointments</div>
+            <div class="metric-trend @(appointmentGrowth > 0 ? "up" : appointmentGrowth < 0 ? "down" : "")">
+                @if (appointmentGrowth > 0)
+                {
+                    <i class="fas fa-arrow-up"></i> @appointmentGrowth 
+                }
+                else if (appointmentGrowth < 0)
+                {
+                    <i class="fas fa-arrow-down"></i> @Math.Abs(appointmentGrowth) 
+                }
+                else
+                {
+                    <i class="fas fa-equals"></i>
+                }
+            </div>
+        </div>
+
+        <!-- Active Patients -->
+        <div class="metric-card">
+            <div class="metric-value">@totalHealthRecords</div>
+            <div class="metric-label">Total Health Records</div>
+            <div class="metric-trend @(healthRecordGrowth > 0 ? "up" : healthRecordGrowth < 0 ? "down" : "")">
+                @if (healthRecordGrowth > 0)
+                {
+                    <i class="fas fa-arrow-up"></i> @healthRecordGrowth
+                }
+                else if ( healthRecordGrowth< 0)
+                {
+                    <i class="fas fa-arrow-down"></i> @Math.Abs(healthRecordGrowth)
+                }
+                else
+                {
+                    <i class="fas fa-equals"></i>
+                }
+            </div>
+        </div>
+
+        <!-- Average Visits -->
+        <div class="metric-card">
+            <div class="metric-value">@totalPrescriptions</div>
+            <div class="metric-label">Total Prescriptions</div>
+            <div class="metric-trend @(prescriptionGrowth > 0 ? "up" : prescriptionGrowth < 0 ? "down" : "")">
+                @if (prescriptionGrowth > 0)
+                {
+                    <i class="fas fa-arrow-up"></i> @prescriptionGrowth
+                }
+                else if (prescriptionGrowth < 0)
+                {
+                    <i class="fas fa-arrow-down"></i> @Math.Abs(prescriptionGrowth)
+                }
+                else
+                {
+                    <i class="fas fa-equals"></i>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="charts-row">
+        <div class="chart-card" style="max-width: 600px !important">
+            <h3 style="color:black !important"><i class="fas fa-chart-line"></i> Patient Growth</h3>
+            <div class="chart-container" style="height:fit-content !important">
+                <div class="chart-placeholder" style="height:fit-content !important">
+                    <canvas id="patientGrowthChart"></canvas>
+                    @* <p>Patient growth chart showing trends over time</p> *@
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-card" style="max-width: 600px !important">
+            <h3 style="color:black !important"><i class="fas fa-chart-pie"></i> Age Distribution</h3>
+            <div class="chart-container" style="height:fit-content !important">
+                <div class="chart-placeholder" >
+                    @* <p>Pie chart showing patient age groups</p> *@
+                    <canvas id="ageDistributionChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<Footer/>
+@code {
+    private int timeRange = 30;
+    private int totalPatients = 0;
+    private int patientGrowth =1;
+    private int totalAppointments = 0;
+    private int appointmentGrowth = 0;
+    private int totalHealthRecords = 0;
+    private int healthRecordGrowth = 1;
+    private int totalPrescriptions = 0;
+    private int prescriptionGrowth = 1;
+
+    private string activityTab = "visits";
+    private int totalVisits = 0;
+    private int avgVisitDuration = 0;
+    private double noShowRate = 0;
+    private bool _chartsRendered = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!_chartsRendered)
+        {
+            _chartsRendered = true;
+
+            var patientGrowthData = new
+            {
+                labels = new[] { "Week 1", "Week 2", "Week 3", "Week 4" },
+                counts = new[] { 10, 15, 7, 20 }
+            };
+
+            var ageDistributionData = new
+            {
+                labels = new[] { "0-18", "19-35", "36-60", "60+" },
+                counts = new[] { 25, 40, 20, 15 }
+            };
+
+            await JS.InvokeVoidAsync("chartInterop.renderAppointmentsChart", "patientGrowthChart", patientGrowthData);
+            await JS.InvokeVoidAsync("chartInterop.renderSpecialtyChart", "ageDistributionChart", ageDistributionData);
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var patients = await patientservice.GetAllAsync();
+       totalPatients = patients.Count();
+       List<Appointment> apps = await appointmentservice.GetAllAppointments();
+       totalAppointments = apps.Count();
+        totalHealthRecords =await patientservice.GetTotalHealthRecords();
+        totalPrescriptions = await patientservice.GetTotalPresc();
+    }
+
+    private void switchTabs(string tab)
+    {
+        activityTab = tab;
+    }
+
+    private void ExportData()
+    {
+        // Add your export logic here (CSV/Excel generation)
+    }
+
+  
+}

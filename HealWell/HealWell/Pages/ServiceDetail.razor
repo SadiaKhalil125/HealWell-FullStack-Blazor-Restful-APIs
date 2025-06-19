@@ -1,0 +1,91 @@
+﻿@page "/services/{serviceId:int}"
+@inject NavigationManager Navigation
+@inject HttpClient Http
+@using HealWell.Models
+@using HealWell.Services
+@inject DoctorService doctorservice
+
+<Header></Header>
+
+@if (service == null)
+{
+    <div class="loading-container">
+        <div class="loading-spinner"></div>
+        <p>Loading service details...</p>
+    </div>
+}
+else
+{
+    <div class="service-detail-page">
+        <div class="container">
+            <div class="service-header">
+                <div class="service-icon">
+                    <i class="fas fa-@service.Icon"></i>
+                </div>
+                <h1>@service.Name</h1>
+                <a href="javascript:Blazor.navigateTo('/services')" class="back-link">
+                    <i class="fas fa-arrow-left"></i> Back to all services
+                </a>
+            </div>
+
+            <div class="service-content">
+                <div class="service-description">
+                    <h2>About This Service</h2>
+                    <p>@service.Description</p>
+
+                    <div class="service-features">
+                        <h3>What to Expect</h3>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Board-certified specialists</li>
+                            <li><i class="fas fa-check-circle"></i> State-of-the-art facilities</li>
+                            <li><i class="fas fa-check-circle"></i> Personalized treatment plans</li>
+                            <li><i class="fas fa-check-circle"></i> Follow-up care included</li>
+                        </ul>
+                    </div>
+
+                    <div class="cta-section">
+                        <h3>Ready to get started?</h3>
+                        <a href="javascript:Blazor.navigateTo('/appointment')" class="btn-app">
+                            <i class="fas fa-calendar-check"></i> Book Appointment
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hospital-info mt-10 p-6 rounded-2xl shadow bg-white">
+                    <h2 class="text-xl font-semibold mb-4">About Our Hospital</h2>
+                    <p>
+                        HealWell Hospital is a state-of-the-art medical facility offering world-class healthcare services 
+                        across multiple specialties. Our mission is to provide compassionate, accessible, and high-quality 
+                        medical care using the latest technologies and best clinical practices.
+                    </p>
+                    <ul class="list-disc pl-5 mt-3 text-gray-700">
+                        <li>Accredited by the National Health Commission</li>
+                        <li>24/7 Emergency and Critical Care Services</li>
+                        <li>Modern Diagnostic and Imaging Center</li>
+                        <li>Experienced Doctors and Dedicated Support Staff</li>
+                        <li>Over 5000 successful surgeries performed annually</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<Footer></Footer>
+
+@code {
+    [Parameter]
+    public int serviceId { get; set; }
+
+    private Service? service;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadService();
+    }
+
+    private async Task LoadService()
+    {
+        service = await doctorservice.GetService(serviceId);
+    }
+}

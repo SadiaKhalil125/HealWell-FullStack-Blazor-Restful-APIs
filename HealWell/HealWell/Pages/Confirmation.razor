@@ -1,0 +1,253 @@
+﻿@page "/confirmation/{AppointmentId:int}/{PaymentId:int}"
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+@using HealWell.Services
+@inject AppointmentService appservice
+@inject DoctorService docservice
+@inject PatientService patientservice
+@inject CheckoutService checkoutservice
+@using HealWell.Models
+<PageTitle>Appointment Confirmed</PageTitle>
+<Header></Header>
+<div style="background-color:#FAFAFA">
+    <!-- Confirmation Header -->
+    <section class="confirmation-header">
+        <div class="container">
+            <div class="confirmation-badge">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h1>Your Appointment is Confirmed!</h1>
+            <p class="confirmation-subtitle">We've sent the details to @confirmationData.PatientEmail</p>
+        </div>
+    </section>
+
+    <!-- Main Confirmation Section -->
+    <section class="confirmation-section">
+        <div class="container">
+            <div class="confirmation-card">
+                <div class="row">
+                    <!-- Appointment Details -->
+                    <div class="col-md-6">
+                        <h2 style="color:#00897b !important"><i style="color:#00897b !important" class="fas fa-calendar-check"></i> Appointment Summary</h2>
+
+                        <div class="detail-item">
+                            <i class="fas fa-user"></i>
+                            <div>
+                                <h3 >Patient</h3>
+                                <p style="color:black !important">@confirmationData.PatientName</p>
+                            </div>
+                        </div>
+
+                        <div class="detail-item">
+                            <i class="fas fa-stethoscope"></i>
+                            <div>
+                                <h3>Service</h3>
+                                <p style="color:black !important">@confirmationData.ServiceType</p>
+                            </div>
+                        </div>
+
+                        <div class="detail-item">
+                            <i class="fas fa-user-md"></i>
+                            <div>
+                                <h3>Doctor</h3>
+                                <p style="color:black !important">@confirmationData.DoctorName</p>
+                            </div>
+                        </div>
+
+                        <div class="detail-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <h3>Date & Time</h3>
+                                <p style="color:black !important">
+                                    @confirmationData.AppointmentDate.ToString("dddd, MMMM d, yyyy")<br>
+                                    @confirmationData.AppointmentTime</p>
+                            </div>
+                        </div>
+
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h3>Location</h3>
+                                <p style="color:black !important">
+                                    HealWell+ Medical Center<br>
+                                    123 Health Street, Suite 456<br>
+                                    Dallas, TX 75201</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Receipt -->
+                    <div class="col-md-6">
+                        <h2 style="color:#00897b !important"><i style="color:#00897b !important" class="fas fa-receipt"></i> Payment Receipt</h2>
+
+                        <div class="receipt">
+                            <div class="receipt-header">
+                                <h3 style="color:black !important">Transaction #@confirmationData.TransactionId</h3>
+                                <p style="color:black !important">@DateTime.Now.ToString("MMMM d, yyyy h:mm tt")</p>
+                            </div>
+
+                            <div class="receipt-details">
+                                <div class="receipt-item">
+                                    <span style="color:black !important">Consultation Fee</span>
+                                    <span style="color:black !important">@($"${confirmationData.ConsultationFee:0.00}")</span>
+                                </div>
+                                <div class="receipt-item">
+                                    <span style="color:black !important">Facility Fee</span>
+                                    <span style="color:black !important">@($"${confirmationData.FacilityFee:0.00}")</span>
+                                </div>
+                                <div class="receipt-item total">
+                                    <span style="color:black !important">Total Paid</span>
+                                    <span style="color:black !important">@($"${confirmationData.TotalAmount:0.00}")</span>
+                                </div>
+
+                                <div class="receipt-item">
+                                    <span style="color:black !important">Payment Method</span>
+                                    <span style="color:black !important">
+                                        <i class="fab fa-cc-@confirmationData.PaymentMethod.ToLower()"></i>
+                                        @confirmationData.PaymentMethod ending in @confirmationData.LastFourDigits
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="receipt-footer">
+                                <p><i class="fas fa-check-circle"></i> Payment completed successfully</p>
+                            </div>
+                        </div>
+
+                        <div class="confirmation-actions">
+                            <button class="btn-print" onclick="window.print()">
+                                <i class="fas fa-print"></i> Print Receipt
+                            </button>
+                            <button class="btn-calendar" @onclick="AddToCalendar">
+                                <i class="fas fa-calendar-plus"></i> Add to Calendar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Next Steps -->
+                <div class="next-steps">
+                    <h2><i class="fas fa-list-check"></i> Next Steps</h2>
+                    <div class="steps-container">
+                        <div class="step">
+                            <div class="step-number" style="color:white">1</div>
+                            <div class="step-content">
+                                <h3 style="color:black !important">Prepare for Your Visit</h3>
+                                <p>Review any pre-appointment instructions sent to your email. Please arrive 15 minutes early.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number" style="color:white">2</div>
+                            <div class="step-content">
+                                <h3 style="color:black !important">Complete Health Forms</h3>
+                                <p>Fill out your health history forms online through our patient portal.Careful to fill in correct info.</p>
+                                @* <div class="d-flex justify-content-center"> *@
+                                <a href="#" @onclick="@(() => NavigationManager.NavigateTo($"/portal/{patient.Id}"))" style="color:#00897b !important" class="btn-portal">Access Patient Portal</a>
+                                @* </div> *@
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number" style="color:white">3</div>
+                            <div class="step-content">
+                                <h3 style="color:black !important">Telehealth Option</h3>
+                                <p>If this is a online appointment,be ready on time, we'll send you a Zoom link 1 hour before your visit.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Support CTA -->
+            @* <div class="support-cta"> *@
+            @*     <h3>Need to make changes to your appointment?</h3> *@
+            @*     <p>Call our scheduling team at <strong>(800) 123-4567</strong> or email <strong>scheduling@healwell.com</strong></p> *@
+            @*     <button class="btn-home" @onclick="() => NavigationManager.NavigateTo("/")"> *@
+            @*         <i class="fas fa-home"></i> Return to Home *@
+            @*     </button> *@
+            @* </div> *@
+        </div>
+
+    </section>
+
+</div>
+<Footer></Footer>
+@code {
+    [Parameter]
+    public int AppointmentId { get; set; }
+    [Parameter]
+    public int PaymentId { get; set; }
+    private ConfirmationData confirmationData;
+    public Patient patient;
+    public Doctor doctor;
+    public PaymentInfo paymentInfo;
+
+    protected async  override Task OnParametersSetAsync()
+    {
+        var appointment = await appservice.GetById(AppointmentId);
+        if (appointment is not null)
+        {
+            patient = await patientservice.GetById(appointment.PatientId);
+            doctor = await docservice.GetById(appointment.DoctorId);
+            paymentInfo = await checkoutservice.GetPaymentById(PaymentId);
+
+
+            // In a real app, you would get this from state or API
+            // This is dummy data for demonstration
+            confirmationData = new ConfirmationData
+                {
+                    PatientName = patient.Name,
+                    PatientEmail = patient.Email,
+                    ServiceType = $"{appointment.Department} Consultation",
+                    Duration = 30,
+                    DoctorName = doctor.Name,
+                    AppointmentDate = appointment.Date,
+                    AppointmentTime = appointment.Date.TimeOfDay.ToString(),
+                    ConsultationFee = 150.00m,
+                    FacilityFee = 25.00m,
+                    TotalAmount = paymentInfo.Amount,
+                    TransactionId = "TX" + new Random().Next(100000, 999999).ToString(),
+                    PaymentMethod = "Online Banking",
+                    LastFourDigits = paymentInfo.CardNumber
+                };
+        }
+
+    }
+
+    private void AddToCalendar()
+    {
+        // In a real app, this would generate a calendar file or link
+        // For demo, we'll just show an alert
+        Console.WriteLine("Adding to calendar...");
+        
+        // This would be the actual implementation:
+        // var calendarEvent = new CalendarEvent
+        // {
+        //     Title = $"Doctor Appointment with {ConfirmationData.DoctorName}",
+        //     Description = $"Appointment for {ConfirmationData.ServiceType}",
+        //     Location = "HealWell+ Medical Center, 123 Health Street, Dallas, TX",
+        //     Start = ConfirmationData.AppointmentDate,
+        //     End = ConfirmationData.AppointmentDate.AddMinutes(ConfirmationData.Duration)
+        // };
+        // NavigationManager.NavigateTo(calendarEvent.GetGoogleCalendarUrl());
+        
+        // For demo purposes:
+        NavigationManager.NavigateTo("/calendar-added");
+    }
+
+    public class ConfirmationData
+    {
+        public string PatientName { get; set; }
+        public string PatientEmail { get; set; }
+        public string ServiceType { get; set; }
+        public string DoctorName { get; set; }
+        public DateTime AppointmentDate { get; set; }
+        public string AppointmentTime { get; set; }
+        public int Duration { get; set; } = 30;
+        public decimal ConsultationFee { get; set; }
+        public decimal FacilityFee { get; set; }
+        public decimal TotalAmount { get; set; }
+        public string TransactionId { get; set; }
+        public string PaymentMethod { get; set; }
+        public string LastFourDigits { get; set; }
+    }
+}

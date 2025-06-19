@@ -1,0 +1,1624 @@
+﻿@page "/admin"
+@using System.ComponentModel.DataAnnotations
+@inject NavigationManager Navigation
+@using HealWell.Services
+@inject HttpClient Http
+@using Microsoft.AspNetCore.Components.Forms
+@using System.Net.Http.Headers
+@using HealWell.Models
+@inject IJSRuntime JS
+@inject DoctorService doctorservice
+@inject PatientService patientservice
+@inject CheckoutService checkoutservice
+@inject AppointmentService appointmentservice
+<Header/>
+<style>
+    .admin-dashboard {
+        padding: 2rem;
+        background-color: #f5f7fa;
+        min-height: 100vh;
+    }
+
+    .admin-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+        .admin-header h1 {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+    .admin-actions {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .admin-btn {
+        padding: 0.75rem 1.5rem;
+        border-radius: 6px;
+        border: none;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.2s;
+    }
+
+        .admin-btn.primary {
+            background-color: var(--secondary-main);
+            color: white;
+        }
+
+            .admin-btn.primary:hover {
+                background-color: var(--secondary-dark);
+            }
+
+        .admin-btn:not(.primary) {
+            background-color: white;
+            border: 1px solid #ddd;
+        }
+
+            .admin-btn:not(.primary):hover {
+                background-color: #f0f0f0;
+            }
+
+    Admin Tabs
+    .admin-tabs {
+        display: flex;
+        border-bottom: 1px solid #ddd;
+        margin-bottom: 1.5rem;
+    }
+
+    .admin-tabs button {
+        padding: 0.75rem 1.5rem;
+        background: none;
+        border: none;
+        border-bottom: 3px solid transparent;
+        font-weight: 600;
+        color: #7f8c8d;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+        .admin-tabs button.active {
+            color: var(--secondary-main);
+            border-bottom-color: var(--secondary-main);
+        }
+
+        .admin-tabs button:hover:not(.active) {
+            color: #2c3e50;
+        }
+
+    Tab Content
+    .admin-tab-content {
+        display: none;
+    }
+
+    .admin-tab-content.active {
+        display: block;
+    }
+
+    Admin Tables
+    .admin-table-container {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        padding: 1.5rem;
+    }
+
+    .admin-table-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+
+        .admin-table-header h2 {
+            font-size: 1.3rem;
+            color: #2c3e50;
+        }
+
+    .admin-search {
+        display: flex;
+        align-items: center;
+        background: #f5f7fa;
+        border-radius: 6px;
+        padding: 0.5rem 1rem;
+    }
+
+        .admin-search i {
+            color: #7f8c8d;
+            margin-right: 0.5rem;
+        }
+
+        .admin-search input {
+            border: none;
+            background: transparent;
+            outline: none;
+        }
+
+    .admin-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .admin-table th {
+            text-align: left;
+            padding: 1rem;
+            background: #f5f7fa;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .admin-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            vertical-align: middle;
+        }
+
+    .doctor-cell {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+        .doctor-cell img {
+            margin: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+    .status-badge {
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+        .status-badge.active {
+            background: #e3fcef;
+            color: #006644;
+        }
+
+        .status-badge.inactive {
+            background: #faeae5;
+            color: #bf0711;
+        }
+
+    .doctor-rating {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+    }
+
+        .doctor-rating i {
+            color: #FFC107;
+            font-size: 0.9rem;
+        }
+
+        .doctor-rating span {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+    .action-cell {
+        padding: 20px;
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .icon-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: none;
+        background: #f5f7fa;
+        color: #7f8c8d;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .icon-btn:hover {
+            background: #e0e6ed;
+        }
+
+        .icon-btn.danger {
+            color: #bf0711;
+        }
+
+            .icon-btn.danger:hover {
+                background: #faeae5;
+            }
+
+    Pagination
+    .admin-pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .admin-pagination button {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 1px solid #ddd;
+        background: white;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .admin-pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+    Analytics
+    .analytics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .analytics-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        Wide + Regular gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .analytics-card .chart-placeholder,
+    .analytics-card canvas, if you're using Chart.js
+    .analytics-card .chart-container {
+        width: 100%;
+        height: 300px;
+        or auto depending on your content
+    }
+
+    .analytics-card {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        padding: 1.5rem;
+        height: 100%;
+    }
+
+        .analytics-card.wide {
+            grid-column: span 2;
+        }
+
+        .analytics-card h2 {
+            font-size: 1.3rem;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+        }
+
+    .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .metric-card {
+        padding: 1.5rem;
+        background: #f5f7fa;
+        border-radius: 8px;
+    }
+
+    .metric-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #2c3e50;
+    }
+
+    .metric-label {
+        color: #7f8c8d;
+        margin: 0.5rem 0;
+    }
+
+    .metric-trend {
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+        .metric-trend.up {
+            color: #006644;
+        }
+
+        .metric-trend.down {
+            color: #bf0711;
+        }
+
+    .chart-placeholder {
+        height: fit-content !important;
+        background: #f5f7fa;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #7f8c8d;
+        padding: 20px;
+    }
+
+        .chart-placeholder i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+    .top-doctors {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .top-doctor {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
+        border-bottom: 1px solid #eee;
+    }
+
+        .top-doctor:last-child {
+            border-bottom: none;
+        }
+
+    .doctor-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+        .doctor-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .doctor-info h4 {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .doctor-info p {
+            margin: 0;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+    .doctor-stats {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+        .doctor-stats .rating {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .doctor-stats .appointments {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+    Modal
+    .admin-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    }
+
+    .modal-content {
+        background: white;
+        border-radius: 10px;
+        width: 800px;
+        max-width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem;
+        border-bottom: 1px solid #eee;
+    }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.3rem;
+            color: #2c3e50;
+        }
+
+    .close-btn {
+        background: none;
+        border: none;
+        font-size: 1.2rem;
+        color: #7f8c8d;
+        cursor: pointer;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        padding: 1.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+
+        .form-group span {
+            margin-left: 0.5rem;
+        }
+
+    .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+        padding: 1.5rem;
+        border-top: 1px solid #eee;
+    }
+    /* Tablet breakpoint (≤992px) */
+  
+
+ 
+    /*patients analytics css*/
+    Base Styles
+    .admin-dashboard {
+        padding: 2rem;
+        background-color: #f8f9fa;
+    }
+
+    .admin-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+        .admin-header h1 {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+    .admin-actions {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .date-range-picker {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: white;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        border: 1px solid #ddd;
+    }
+
+        .date-range-picker select {
+            border: none;
+            outline: none;
+            background: transparent;
+        }
+
+    .admin-btn {
+        padding: 0.75rem 1.5rem;
+        border-radius: 6px;
+        border: none;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.2s;
+        background-color: white;
+        border: 1px solid #ddd;
+    }
+
+        .admin-btn:hover {
+            background-color: #f0f0f0;
+        }
+
+    Metrics Grid
+    .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .metric-card {
+        background: white;
+        border-radius: 10px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .metric-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #2c3e50;
+    }
+
+    .metric-label {
+        color: #7f8c8d;
+        margin: 0.5rem 0;
+    }
+
+    .metric-trend {
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+        .metric-trend.up {
+            color: #006644;
+        }
+
+        .metric-trend.down {
+            color: #bf0711;
+        }
+
+    Charts
+    .charts-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .chart-card {
+        background: white;
+        border-radius: 10px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+        .chart-card h3 {
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+    .chart-container {
+        height: 250px;
+    }
+
+    .chart-placeholder {
+        height: 100%;
+        background: #f5f7fa;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #7f8c8d;
+    }
+
+    Demographics
+    .demographics-section {
+        background: white;
+        border-radius: 10px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        margin-bottom: 2rem;
+    }
+
+    .demographics-section h2 {
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .demographics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .demographics-card {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 1.5rem;
+    }
+
+        .demographics-card h3 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+    .gender-distribution {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .gender-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .gender-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+    }
+
+        .gender-icon.male {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .gender-icon.female {
+            background: #fce4ec;
+            color: #c2185b;
+        }
+
+        .gender-icon.other {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+
+    .gender-percent {
+        font-weight: 600;
+        font-size: 1.2rem;
+    }
+
+    .gender-label {
+        color: #7f8c8d;
+        font-size: 0.9rem;
+    }
+
+    .age-groups {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .age-group {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .age-range {
+        width: 80px;
+        font-weight: 500;
+    }
+
+    .age-bar-container {
+        flex-grow: 1;
+        height: 10px;
+        background: #e0e0e0;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .age-bar {
+        height: 100%;
+        background: var(--secondary-main);
+    }
+
+    .age-percent {
+        width: 40px;
+        text-align: right;
+        font-size: 0.9rem;
+    }
+
+    .insurance-providers {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .provider-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .provider-name {
+        width: 120px;
+        font-weight: 500;
+    }
+
+    .provider-count {
+        width: 80px;
+        color: #7f8c8d;
+        font-size: 0.9rem;
+    }
+
+    .provider-bar-container {
+        flex-grow: 1;
+        height: 8px;
+        background: #e0e0e0;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .provider-bar {
+        height: 100%;
+        background: var(--secondary-main);
+    }
+
+    Patient Activity
+    .activity-section {
+        background: white;
+        border-radius: 10px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        margin-bottom: 2rem;
+    }
+
+    .activity-section h2 {
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .activity-tabs {
+        display: flex;
+        border-bottom: 1px solid #ddd;
+        margin-bottom: 1.5rem;
+    }
+
+        .activity-tabs button {
+            padding: 0.75rem 1.5rem;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            font-weight: 600;
+            color: #7f8c8d;
+            cursor: pointer;
+        }
+
+            .activity-tabs button.active {
+                color: var(--secondary-main);
+                border-bottom-color: var(--secondary-main);
+            }
+
+            .activity-tabs button:hover:not(.active) {
+                color: #2c3e50;
+            }
+
+    .visit-trends {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .visit-metrics {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+    }
+
+    .visit-metric {
+        background: #f5f7fa;
+        border-radius: 8px;
+        padding: 1rem;
+        text-align: center;
+    }
+
+    .visit-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--secondary-main);
+    }
+
+    .visit-label {
+        color: #7f8c8d;
+        font-size: 0.9rem;
+    }
+
+    .conditions-list table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .conditions-list th {
+        text-align: left;
+        padding: 1rem;
+        background: #f5f7fa;
+        color: #2c3e50;
+        font-weight: 600;
+    }
+
+    .conditions-list td {
+        padding: 1rem;
+        border-bottom: 1px solid #eee;
+    }
+
+    .medications-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+
+    .medication-card {
+        background: #f5f7fa;
+        border-radius: 8px;
+        padding: 1rem;
+    }
+
+    .medication-name {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .medication-stats {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+    }
+
+    .medication-patients {
+        color: #2c3e50;
+    }
+
+    .medication-percent {
+        color: var(--secondary-main);
+        font-weight: 600;
+    }
+
+    .medication-class {
+        color: #7f8c8d;
+        font-size: 0.8rem;
+    }
+
+    Locations
+    .locations-section {
+        background: white;
+        border-radius: 10px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .locations-section h2 {
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .locations-container {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 1.5rem;
+    }
+
+    .locations-map {
+        height: 400px;
+        background: #f5f7fa;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .map-placeholder {
+        text-align: center;
+        color: #7f8c8d;
+    }
+
+        .map-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+    .locations-list h3 {
+        margin-top: 0;
+    }
+
+    .locations-list table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .locations-list th {
+        text-align: left;
+        padding: 1rem;
+        background: #f5f7fa;
+        color: #2c3e50;
+        font-weight: 600;
+    }
+
+    .locations-list td {
+        padding: 1rem;
+        border-bottom: 1px solid #eee;
+    }
+
+</style>
+<div class="admin-dashboard">
+    <!-- Admin Header -->
+    <div class="admin-header">
+        <h1 id="tw-1"><i class="fas fa-user-shield"></i> Admin Dashboard</h1>
+        <div class="admin-actions">
+            <button class="admin-btn primary" @onclick="@(()=>Navigation.NavigateTo("/doctor/register"))">
+                <i class="fas fa-user-plus"></i> Add Doctor
+            </button>
+            <button class="admin-btn primary" @onclick="ShowAddDoctorModal">
+                <i class="fas fa-user-plus"></i> Edit Doctor
+            </button>
+            <button class="admin-btn primary" >
+                <a style="text-decoration:none; color:white;" href="javascript:Blazor.navigateTo('/patient-analytics')">  <i class="fas fa-user"></i> Patients Analytics</a>
+            </button>
+
+            <button class="admin-btn" @onclick="RefreshData">
+                <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+        </div>
+    </div>
+
+    <!-- Admin Tabs -->
+    <div class="admin-tabs">
+        <button class="@(activeTab == "doctors" ? "active" : "")" @onclick="@(() => SwitchTab("doctors"))">
+            <i class="fas fa-user-md"></i> Doctors
+        </button>
+        <button class="@(activeTab == "analytics" ? "active" : "")" @onclick="@(() => SwitchTab("analytics"))">
+            <i class="fas fa-chart-bar"></i> Analytics
+        </button>
+        @* <button class="@(activeTab == "appointments" ? "active" : "")" @onclick="@(() => SwitchTab("appointments"))"> *@
+        @*     <i class="fas fa-calendar-alt"></i> Appointments *@
+        @* </button> *@
+        @* <button class="@(activeTab == "settings" ? "active" : "")" @onclick="@(() => SwitchTab("settings"))"> *@
+        @*     <i class="fas fa-cog"></i> Settings *@
+        @* </button> *@
+
+    </div>
+
+    <!-- Doctors Management Tab -->
+    <div class="admin-tab-content @(activeTab == "doctors" ? "active" : "")">
+        <div class="admin-table-container">
+            <div class="admin-table-header">
+                <h2 style="color:black !important">Manage Doctors</h2>
+                <div class="admin-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search doctors..." @bind="doctorSearchTerm" />
+                </div>
+            </div>
+
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Specialty</th>
+                        <th>Status</th>
+                        <th>Appointments</th>
+                        <th>Rating</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var doctor in FilteredDoctors)
+                    {
+                        <tr>
+                            <td style="color:black !important">@doctor.Id</td>
+                            <td class="doctor-cell">
+                                <img src="@doctor.ImageUrl" alt="@doctor.Name" />
+                                <span style="color:black !important">@doctor.Name</span>
+                            </td>
+                            <td style="color:black !important">@doctor.Specialty</td>
+                            <td>
+                                <span class="status-badge @(doctor.IsActive ? "active" : "inactive")">
+                                    @(doctor.IsActive ? "Active" : "Inactive")
+                                </span>
+                            </td>
+                            <td style="color:black !important" >@doctor.AppointmentCount</td>
+                            <td>
+                                <div class="doctor-rating">
+                                    @for (int i = 0; i < 5; i++)
+                                    {
+                                        if (i < Math.Floor(doctor.Rating))
+                                        {
+                                            <i class="fas fa-star"></i>
+                                        }
+                                        else if (i < doctor.Rating)
+                                        {
+                                            <i class="fas fa-star-half-alt"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="far fa-star"></i>
+                                        }
+                                    }
+                                    <span>@doctor.Rating.ToString("0.1")</span>
+                                </div>
+
+                            </td>
+                            <td class=""><div style="display:flex; align-content:center; padding:2px;">
+                                    <button class="icon-btn" @onclick="() => EditDoctor(doctor.Id)">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="icon-btn danger" @onclick="() => ToggleDoctorStatus(doctor.Id)">
+                                        <i class="fas @(doctor.IsActive ? "fa-toggle-on" : "fa-toggle-off")"></i>
+                                    </button>
+                                    <button class="icon-btn" @onclick="() => ViewDoctor(doctor.Id)">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div class="admin-pagination">
+                <button @onclick="PreviousPage" :disabled="currentPage == 1">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <span>Page @currentPage of @totalPages</span>
+                <button @onclick="NextPage" :disabled="currentPage == totalPages">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analytics Tab -->
+    <div class="admin-tab-content @(activeTab == "analytics" ? "active" : "")">
+        <div class="analytics-grid">
+            <!-- Key Metrics -->
+            <div class="analytics-card wide">
+                <h2>Key Metrics</h2>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">@totalDoctors</div>
+                        <div class="metric-label">Total Doctors</div>
+                        <div class="metric-trend up">
+                            <i class="fas fa-arrow-up"></i> 12%
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">@totalAppointments</div>
+                        <div class="metric-label">Appointments (30d)</div>
+                        <div class="metric-trend up">
+                            <i class="fas fa-arrow-up"></i> 5%
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">@averageRating.ToString()</div>
+                        <div class="metric-label">Avg. Rating</div>
+                        <div class="metric-trend">
+                            <i class="fas fa-equals"></i> 0%
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">@revenueLastMonth.ToString("C")</div>
+                        <div class="metric-label">Revenue (30d)</div>
+                        <div class="metric-trend down">
+                            <i class="fas fa-arrow-down"></i> 3%
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Appointments Chart -->
+            <div class="analytics-card">
+                <h2>Appointments</h2>
+                <div class="chart-placeholder">
+                    @* <i class="fas fa-chart-line"></i> *@
+                    <canvas id="appointmentsChart" width="400" height="200"></canvas>
+                    @* <p>Appointments over time chart</p> *@
+                </div>
+            </div>
+
+            <!-- Top Doctors -->
+            <div class="analytics-card">
+                <h2>Top Performing Doctors</h2>
+                <div class="top-doctors">
+                    @foreach (var doctor in topDoctors)
+                    {
+                        <div class="top-doctor">
+                            <div class="doctor-info">
+                                <img src="@doctor.ImageUrl" alt="@doctor.Name" />
+                                <div>
+                                    <h4>@doctor.Name</h4>
+                                    <p>@doctor.Specialty</p>
+                                </div>
+                            </div>
+                            <div class="doctor-stats">
+                                <span class="rating">@doctor.Rating.ToString("0.1")</span>
+                                <span class="appointments">@doctor.AppointmentCount appts</span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Specialty Distribution -->
+            <div class="analytics-card">
+                <h2>Specialty Distribution</h2>
+                <div class="chart-placeholder">
+                    @* <i class="fas fa-chart-pie"></i> *@
+                    <canvas id="specialtyChart" width="400" height="200"></canvas>
+                    @* <p>Specialties pie chart</p> *@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Doctor Modal -->
+    @if (showDoctorModal)
+    {
+        <div class="admin-modal">
+            <div class="modal-content">
+                <div class="modal-header"> 
+                    @* <h3>"Edit Doctor"</h3>  *@
+                    <button class="close-btn" @onclick="CloseModal"> 
+                        <i class="fas fa-times"></i> 
+                    </button> 
+                </div>
+
+
+                <div class="doctor-registration-container">
+                    <div class="container">
+                        <div class="registration-card">
+                            <h2 class="section-title" style="font-weight: bolder;">Doctor <span>Edit</span></h2>
+                            <p class="section-subtitle">Join our network of healthcare professionals</p>
+
+                            <EditForm Model="@doctor" OnValidSubmit="HandleValidSubmit">
+                                <DataAnnotationsValidator />
+                                <ValidationSummary class="validation-summary" />
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Full Name</label>
+                                        <InputText class="form-control" @bind-Value="doctor.Name" />
+                                        <ValidationMessage For="@(() => doctor.Name)" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Specialty</label>
+                                        <InputText class="form-control" @bind-Value="doctor.Specialty" />
+                                        <ValidationMessage For="@(() => doctor.Specialty)" />
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <InputText class="form-control" @bind-Value="doctor.Email" />
+                                        <ValidationMessage For="@(() => doctor.Email)" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Hospital/Clinic</label>
+                                        <InputText class="form-control" @bind-Value="doctor.Hospital" />
+                                        <ValidationMessage For="@(() => doctor.Hospital)" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Professional Bio</label>
+                                    <InputTextArea class="form-control" rows="3" @bind-Value="doctor.Bio" />
+                                    <ValidationMessage For="@(() => doctor.Bio)" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Professional Experience</label>
+                                    <InputTextArea class="form-control" rows="3" @bind-Value="doctor.Experience" />
+                                    <ValidationMessage For="@(() => doctor.Experience)" />
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Education (comma separated)</label>
+                                        <InputText class="form-control" @bind-Value="educationInput" />
+                                        <small class="form-text">Example: MD Harvard University, Residency Mayo Clinic</small>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Available Days (comma separated)</label>
+                                        <InputText class="form-control" @bind-Value="availableDaysInput" />
+                                        <small class="form-text">Example: Monday, Wednesday, Friday</small>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Available DateTimes (comma separated)</label>
+                                    <InputText class="form-control" @bind-Value="availableDateTimesInput" />
+                                    <small class="form-text">Format: 2025-05-12T14:00, 2025-05-13T09:30</small>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Department ID</label>
+                                        <InputNumber class="form-control" @bind-Value="doctor.DepartmentId" />
+                                        <ValidationMessage For="@(() => doctor.DepartmentId)" />
+                                    </div>
+
+                                    <div class="form-group form-check-container">
+                                        <div class="form-check">
+                                            <InputCheckbox class="form-check-input" @bind-Value="doctor.IsActive" />
+                                            <label class="form-check-label " style="margin-left:50px">Active</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Profile Image</label>
+                                    <div class="file-upload-container">
+                                        <InputFile class="file-upload-input" OnChange="HandleFileSelected" />
+                                        <div class="file-upload-label">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                            <span>@(imageFile != null ? imageFile.Name : "Choose a file...")</span>
+                                        </div>
+                                    </div>
+                                    <small class="form-text">Max 10MB (JPEG, PNG)</small>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="submit" class="btn-app">
+                                        <i class="fas fa-user-md"></i> Update Doctor Details
+                                    </button>
+                                </div>
+                            </EditForm>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<Footer></Footer>
+@code {
+    private DoctorRegisterDto doctor = new();
+    private string educationInput;
+    private string availableDaysInput;
+    private string availableDateTimesInput;
+    private IBrowserFile imageFile;
+
+    private string activeTab = "doctors";
+    private bool showDoctorModal = false;
+    private bool editingDoctor = true;
+    private string doctorSearchTerm = "";
+    private int currentPage = 1;
+    private int pageSize = 10;
+
+    // Dummy data - replace with API calls
+    private List<Doctor> doctors = new List<Doctor>();
+    private List<string> specialties = new();
+
+
+    // Analytics data
+    private int totalDoctors = 0;
+    private int totalAppointments = 0;
+    private double averageRating = 0.0;
+    private decimal revenueLastMonth = 0;
+    private List<Doctor> topDoctors = new List<Doctor>();
+    private List<Appointment> appointments = new List<Appointment>();
+    private List<PaymentInfo> paymentInfos = new List<PaymentInfo>();
+    protected override async void OnInitialized()
+    {
+        LoadDoctors();
+        LoadAnalyticsData();
+        foreach(var doc in doctors)
+        {
+            averageRating += doc.Rating;
+        }
+        averageRating = averageRating / doctors.Count();
+        paymentInfos = await checkoutservice.GetPayments();
+        revenueLastMonth = 175 * (paymentInfos.Count());
+        totalDoctors = await doctorservice.GetNumber();
+        appointments = await appointmentservice.GetAllAppointments();
+        totalAppointments = appointments.Count();
+        specialties = doctors.Select(d => d.Specialty).Distinct().ToList();
+     
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && activeTab == "analytics")
+        {
+            var appointmentChartData = appointments
+                .GroupBy(a => a.Date.Date)
+                .OrderBy(g => g.Key)
+                .Select(g => new { Label = g.Key.ToShortDateString(), Count = g.Count() })
+                .ToList();
+
+            var chartDataAppointments = new ChartData
+                {
+                    Labels = appointmentChartData.Select(x => x.Label).ToList(),
+                    Counts = appointmentChartData.Select(x => x.Count).ToList()
+                };
+
+            var specialtyChartData = doctors
+                .GroupBy(d => d.Specialty)
+                .Select(g => new { Label = g.Key, Count = g.Count() })
+                .ToList();
+
+            var chartDataSpecialties = new ChartData
+                {
+                    Labels = specialtyChartData.Select(x => x.Label).ToList(),
+                    Counts = specialtyChartData.Select(x => x.Count).ToList()
+                };
+
+            await JS.InvokeVoidAsync("chartInterop.renderAppointmentsChart", "appointmentsChart", chartDataAppointments);
+            await JS.InvokeVoidAsync("chartInterop.renderSpecialtyChart", "specialtyChart", chartDataSpecialties);
+        }
+    }
+
+    private async void LoadDoctors()
+    {
+        doctors = await doctorservice.GetAllAsync(); 
+        foreach (var doc in doctors)
+        {
+            doc.ImageUrl = await doctorservice.GetImageUrl(doc.ImageUrl);
+        }
+        
+    }
+
+    private void LoadAnalyticsData()
+    {
+        // Replace with API call
+        topDoctors = doctors.OrderByDescending(d => d.Rating)
+                           .Take(3)
+                           .ToList();
+    }
+
+    private List<Doctor> FilteredDoctors => doctors
+        .Where(d => string.IsNullOrEmpty(doctorSearchTerm) || 
+                    d.Name.Contains(doctorSearchTerm, StringComparison.OrdinalIgnoreCase) ||
+                    d.Specialty.Contains(doctorSearchTerm, StringComparison.OrdinalIgnoreCase))
+        .Skip((currentPage - 1) * pageSize)
+        .Take(pageSize)
+        .ToList();
+
+    private int totalPages => (int)Math.Ceiling((double)doctors.Count / pageSize);
+
+    // private void SwitchTab(string tabName)
+    // {
+    //     activeTab = tabName;
+    // }
+    private async Task SwitchTab(string tab)
+    {
+        activeTab = tab;
+        if (tab == "analytics")
+        {
+            StateHasChanged(); // Ensure the canvas elements are in DOM
+            await Task.Delay(100); // Let Blazor render the DOM first
+
+            var appointmentChartData = appointments
+                .GroupBy(a => a.Date.Date)
+                .OrderBy(g => g.Key)
+                .Select(g => new { Label = g.Key.ToShortDateString(), Count = g.Count() })
+                .ToList();
+
+            var chartDataAppointments = new ChartData
+                {
+                    Labels = appointmentChartData.Select(x => x.Label).ToList(),
+                    Counts = appointmentChartData.Select(x => x.Count).ToList()
+                };
+
+            var specialtyChartData = doctors
+                .GroupBy(d => d.Specialty)
+                .Select(g => new { Label = g.Key, Count = g.Count() })
+                .ToList();
+
+            var chartDataSpecialties = new ChartData
+                {
+                    Labels = specialtyChartData.Select(x => x.Label).ToList(),
+                    Counts = specialtyChartData.Select(x => x.Count).ToList()
+                };
+
+            await JS.InvokeVoidAsync("chartInterop.renderAppointmentsChart", "appointmentsChart", chartDataAppointments);
+            await JS.InvokeVoidAsync("chartInterop.renderSpecialtyChart", "specialtyChart", chartDataSpecialties);
+        }
+    }
+
+    private void ShowAddDoctorModal()
+    {
+        
+        editingDoctor = false;
+        showDoctorModal = true;
+    }
+
+
+    private void EditDoctor(int id)
+    {
+        var doctor = doctors.FirstOrDefault(d => d.Id == id);
+        if (doctor != null)
+        {
+            // doctorForm = new DoctorForm
+            // {
+            //     Id = doctor.Id,
+            //     Name = doctor.Name,
+            //     Specialty = doctor.Specialty,
+            //     Hospital = doctor.Hospital,
+            //     ImageUrl = doctor.ImageUrl,
+            //     Bio = doctor.Bio,
+            //     IsActive = doctor.IsActive,
+            //     Add other fields as needed
+            // };
+            editingDoctor = true;
+            showDoctorModal = true;
+        }
+    }
+
+    private void ToggleDoctorStatus(int id)
+    {
+        var doctor = doctors.FirstOrDefault(d => d.Id == id);
+        if (doctor != null)
+        {
+            doctor.IsActive = !doctor.IsActive;
+        }
+    }
+
+    private void ViewDoctor(int id)
+    {
+        Navigation.NavigateTo($"/doctor/{id}");
+    }
+
+
+    private void CloseModal()
+    {
+        showDoctorModal = false;
+    }
+    
+    private void RefreshData()
+    {
+        LoadDoctors();
+        LoadAnalyticsData();
+    }
+    
+    private void PreviousPage()
+    {
+        if (currentPage > 1) currentPage--;
+    }
+    
+    private void NextPage()
+    {
+        if (currentPage < totalPages) currentPage++;
+    }
+    
+    private void HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        imageFile = e.File;
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        // Parse comma-separated inputs to lists
+        doctor.Education = educationInput?.Split(',', StringSplitOptions.RemoveEmptyEntries)
+            .Select(x => x.Trim()).ToList() ?? new List<string>();
+
+        doctor.AvailableDays = availableDaysInput?.Split(',', StringSplitOptions.RemoveEmptyEntries)
+            .Select(x => x.Trim()).ToList() ?? new List<string>();
+
+        doctor.AvailableDateTimes = availableDateTimesInput?.Split(',', StringSplitOptions.RemoveEmptyEntries)
+            .Select(x =>
+            {
+                bool success = DateTime.TryParse(x.Trim(), out var dt);
+                return success ? (DateTime?)dt : null;
+            })
+            .Where(x => x.HasValue)
+            .Select(x => x.Value)
+            .ToList() ?? new List<DateTime>();
+
+        var formData = new MultipartFormDataContent();
+
+        // Add simple properties
+       
+        formData.Add(new StringContent(doctor.Name ?? ""), "Name");
+        formData.Add(new StringContent(doctor.Specialty ?? ""), "Specialty");
+        formData.Add(new StringContent(doctor.Email ?? ""), "Email");
+        formData.Add(new StringContent(doctor.Hospital ?? ""), "Hospital");
+        formData.Add(new StringContent(doctor.Bio ?? ""), "Bio");
+        formData.Add(new StringContent(doctor.Experience ?? ""), "Experience");
+        formData.Add(new StringContent(doctor.DepartmentId.ToString()), "DepartmentId");
+        formData.Add(new StringContent(doctor.IsActive.ToString()), "IsActive");
+
+        // Add each Education entry separately
+        foreach (var edu in doctor.Education)
+        {
+            formData.Add(new StringContent(edu), "Education");
+        }
+
+        // Add each AvailableDay separately
+        foreach (var day in doctor.AvailableDays)
+        {
+            formData.Add(new StringContent(day), "AvailableDays");
+        }
+
+        // Add each AvailableDateTime separately (ISO 8601 format)
+        foreach (var dt in doctor.AvailableDateTimes)
+        {
+            formData.Add(new StringContent(dt.ToString("o")), "AvailableDateTimes");
+        }
+
+        // Add image file if selected
+        if (imageFile != null)
+        {
+            var fileContent = new StreamContent(imageFile.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024));
+            fileContent.Headers.ContentType = new MediaTypeHeaderValue(imageFile.ContentType);
+            formData.Add(fileContent, "image", imageFile.Name);
+        }
+
+        var response = await Http.PostAsync("https://localhost:7047/api/Doctors/edit", formData);
+
+        if (response.IsSuccessStatusCode)
+        {
+            Console.WriteLine("Doctor updated successfully!");
+            // Optionally clear form or show success UI
+        }
+        else
+        {
+            var errorMsg = await response.Content.ReadAsStringAsync();
+            Console.WriteLine($"Failed to update doctor: {errorMsg}");
+            // Optionally display error message on UI
+        }
+    }
+    public class ChartData
+    {
+        public List<string> Labels { get; set; } = new();
+        public List<int> Counts { get; set; } = new();
+    }
+
+} 

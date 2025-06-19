@@ -1,0 +1,209 @@
+﻿@page "/doctor/{Id:int}"
+@inject NavigationManager Navigation
+@inject HttpClient Http
+@inject DoctorService doctorservice
+@using HealWell.Services
+@using HealWell.Models
+<Header></Header>
+
+
+<div class="med-doctor-page">
+    @if (doctor == null)
+    {
+        <div class="med-loading">
+            <div class="med-loading-spinner"></div>
+            <p>Loading doctor profile...</p>
+        </div>
+    }
+    else
+    {
+        <div class="med-doctor-container">
+            <!-- Doctor Profile Header -->
+            <div class="med-doctor-header">
+                <div class="med-doctor-image-container">
+                    <img src="@EnsureImagePath(doctor.ImageUrl)"
+                    alt="@doctor.Name"
+                    class="med-doctor-image"
+                    onerror="this.onerror=null;this.src='/images/med-default-doctor.jpg'" />
+                    <div class="med-doctor-badge me-1">
+                        <i class="fas fa-user-md"></i> Specialist
+                    </div>
+                </div>
+
+                <div class="med-doctor-intro">
+                    <h1 class="med-doctor-name">@doctor.Name</h1>
+                    <p class="med-doctor-specialty">@doctor.Specialty</p>
+
+                    <div class="med-doctor-meta">
+                        <div class="med-doctor-rating">
+                            @for (int i = 0; i < 5; i++)
+                            {
+                                <i class="fas @(i < doctor.Rating ? "fa-star" : "fa-star-o")"></i>
+                            }
+                            <span>@doctor.ReviewCount reviews</span>
+                        </div>
+
+                        <div class="med-doctor-hospital">
+                            <i class="fas fa-hospital"></i>
+                            <span>@doctor.Hospital</span>
+                        </div>
+                    </div>
+                    <!-- New Message Button -->
+                    <div class="med-doctor-actions d-flex mt-2 mb-2">
+                        @* <button class="med-primary-btn" style="margin-right: 10px;" @onclick="@(() => Navigation.NavigateTo("/chat-consultation"))"> *@
+                        @*     <i class="fas fa-envelope"></i> Message Doctor *@
+                        @* </button> *@
+                        <button class="med-primary-btn" @onclick="BookAppointment">
+                            <i class="fas fa-calendar-check"></i> Book Appointment
+                        </button>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+            <!-- Main Content Tabs -->
+            <div class="med-doctor-content">
+                <div class="med-tabs">
+                    <button class="med-tab @(ActiveTab == "overview" ? "active" : "")" @onclick="@(() => SetActiveTab("overview"))">Overview</button>
+                    <button class="med-tab @(ActiveTab == "experience" ? "active" : "")" @onclick="@(() => SetActiveTab("experience"))">Experience</button>
+                    <button class="med-tab @(ActiveTab == "education" ? "active" : "")" @onclick="@(() => SetActiveTab("education"))">Education</button>
+                    <button class="med-tab @(ActiveTab == "availability" ? "active" : "")" @onclick="@(() => SetActiveTab("availability"))">Availability</button>
+                    <button class="med-tab @(ActiveTab == "reviews" ? "active" : "")" @onclick="@(() => SetActiveTab("reviews"))">Reviews</button>
+
+                </div>
+
+                <div class="med-tab-content">
+                    <!-- Overview Tab -->
+                    <div class="med-tab-pane @(ActiveTab == "overview" ? "active" : "")">
+                        <h2 class="med-section-title">About Dr. @doctor.Name.Split(' ').Last()</h2>
+                        <p class="med-doctor-bio">@doctor.Bio</p>
+
+                        <div class="med-specialties">
+                            <h3 class="med-section-subtitle">Specializations</h3>
+                            <div class="med-tag-group">
+                                <span class="med-tag">@doctor.Specialty</span>
+                                <span class="med-tag">Cardiac Care</span>
+                                <span class="med-tag">Preventive Medicine</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Experience Tab -->
+                    <div class="med-tab-pane @(ActiveTab == "experience" ? "active" : "")">
+                        <h2 class="med-section-title">Professional Experience</h2>
+                        <div class="med-timeline">
+                            <div class="med-timeline-item">
+                                <div class="med-timeline-icon">
+                                    <i class="fas fa-briefcase"></i>
+                                </div>
+                                <div class="med-timeline-content">
+                                    <h3 class="mt-2">@doctor.Experience</h3>
+                                    <p>Current role at @doctor.Hospital</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Education Tab -->
+                    <div class="med-tab-pane @(ActiveTab == "education" ? "active" : "")">
+                        <h2 class="med-section-title">Education</h2>
+                        <div class="med-timeline">
+                            @foreach (var edu in doctor.Education)
+                            {
+                                <div class="med-timeline-item">
+                                    <div class="med-timeline-icon">
+                                        <i class="fas fa-graduation-cap"></i>
+                                    </div>
+                                    <div class="med-timeline-content">
+                                        <h3 class="mt-2">@edu</h3>
+                                        <p>Lorem ipsum dolor sit amet.</p>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Availability Tab -->
+                    <div class="med-tab-pane @(ActiveTab == "availability" ? "active" : "")">
+                        <h2 class="med-section-title">Availability</h2>
+                        <div class="med-schedule-grid">
+                            @for (int i = 0; i < doctor.AvailableDays.Count; i++)
+                            {
+                                <div class="med-schedule-card">
+                                    <h3>@doctor.AvailableDays[i]</h3>
+                                    <p>@doctor.AvailableDateTimes[i].ToString("hh:mm tt")</p>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+
+                    <!-- Reviews Tab -->
+                    <div class="med-tab-pane @(ActiveTab == "reviews" ? "active" : "")">
+                        <h2 class="med-section-title">Patient Reviews</h2>
+                        <p>No reviews yet. Be the first to leave a review!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<Footer></Footer>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private string ActiveTab = "overview";
+
+    private Doctor doctor=new();
+
+    private void SetActiveTab(string tabName)
+    {
+        ActiveTab = tabName;
+    }
+
+    private string EnsureImagePath(string imageUrl)
+    {
+        if (string.IsNullOrEmpty(imageUrl))
+            return "/images/team-image2.jpg";
+
+        if (imageUrl.StartsWith("http") || imageUrl.StartsWith("/"))
+            return imageUrl;
+
+        return $"/images/{imageUrl}";
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {// Dummy data - replace with API call
+     //  doctor = await doctorservice.GetById(Id);
+        doctor = await doctorservice.GetById(Id);
+        
+        doctor.ImageUrl = await doctorservice.GetImageUrl(doctor.ImageUrl);
+       
+    }
+
+    private void BookAppointment()
+    {
+        Navigation.NavigateTo($"/appointment");
+    }
+
+    // public class Doctor
+    // {
+    //     public int Id { get; set; }
+    //     public string Name { get; set; }
+    //     public string Specialty { get; set; }
+    //     public string Email { get; set; }
+    //     public string ImageUrl { get; set; }
+    //     public int Rating { get; set; }
+    //     public int ReviewCount { get; set; }
+    //     public string Hospital { get; set; }
+    //     public string Bio { get; set; }
+    //     public List<string> Education { get; set; }
+    //     public string Experience { get; set; }
+    //     public Dictionary<string, DateTime> Availability { get; set; }
+    // }
+}

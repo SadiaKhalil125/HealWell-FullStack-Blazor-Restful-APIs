@@ -1,0 +1,177 @@
+is_global = true
+build_property.EnableAotAnalyzer = 
+build_property.EnableSingleFileAnalyzer = 
+build_property.EnableTrimAnalyzer = false
+build_property.IncludeAllContentForSelfExtract = 
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = false
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = browser
+build_property.RootNamespace = HealWell
+build_property.RootNamespace = HealWell
+build_property.ProjectDir = D:\SCD\IMS2\Project\HealWell\HealWell\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = false
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = D:\SCD\IMS2\Project\HealWell\HealWell
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 8.0
+build_property.EnableCodeStyleSeverity = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/About.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWJvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/AddAppointment.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRkQXBwb2ludG1lbnQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/AddPrescription.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRkUHJlc2NyaXB0aW9uLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/AdminDashboard.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5EYXNoYm9hcmQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/AppointmentSummary.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXBwb2ludG1lbnRTdW1tYXJ5LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/ChatConsultation.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2hhdENvbnN1bHRhdGlvbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/Checkout.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2hlY2tvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/Confirmation.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29uZmlybWF0aW9uLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/Contact.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29udGFjdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/Counter.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/DoctorCard.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRG9jdG9yQ2FyZC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/DoctorDetail.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRG9jdG9yRGV0YWlsLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/DoctorLogin.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRG9jdG9yTG9naW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/DoctorPortal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRG9jdG9yUG9ydGFsLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/DoctorRegister.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRG9jdG9yUmVnaXN0ZXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/DoctorSearch.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRG9jdG9yU2VhcmNoLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/EditProfile.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRWRpdFByb2ZpbGUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/Footer.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRm9vdGVyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/Header.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSGVhZGVyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/HealthRecords.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSGVhbHRoUmVjb3Jkcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/Home.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9tZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/Login.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9naW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/MyAppointments.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTXlBcHBvaW50bWVudHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/PatientPortal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGF0aWVudFBvcnRhbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/PatientProfile.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGF0aWVudFByb2ZpbGUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/PatientsAnalytics.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGF0aWVudHNBbmFseXRpY3MucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/PaymentInformation.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGF5bWVudEluZm9ybWF0aW9uLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/Prescriptions.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJlc2NyaXB0aW9ucy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/Register.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVnaXN0ZXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/ResetPassword.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVzZXRQYXNzd29yZC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/ServiceDetail.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VydmljZURldGFpbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/Services.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VydmljZXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/Weather.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcV2VhdGhlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Pages/YourChats.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcWW91ckNoYXRzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Layout/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE1haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-e1yq3e2w12
+
+[D:/SCD/IMS2/Project/HealWell/HealWell/Layout/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE5hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-sx7gxoun9r

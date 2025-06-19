@@ -1,0 +1,178 @@
+﻿@page "/editappointment/{Id:int}"
+@page "/appointment"
+@inject NavigationManager Navigation
+@inject HttpClient Http
+@using Microsoft.AspNetCore.Components.Forms
+@using HealWell.Models
+
+<Header></Header>
+
+<section id="appointment" style="background-color:white !important">
+    <div class="container">
+        <div class="row" style="display: flex; align-items: flex-start;">
+            <div class="col-md-6 col-sm-6">
+                <img class="app-img" src="/images/g3-1.jpg" style="height:900px; width:500px; margin-left:10px;" alt="">
+            </div>
+
+            <div class="col-md-6 col-sm-6 appform" style="background-color:#f5f5f5; padding:30px; border-radius: 20px; margin-top:160px; max-width: 600px;">
+                <EditForm Model="@appointment" OnValidSubmit="@HandleValidSubmit">
+                    <DataAnnotationsValidator />
+                    <div class="section-title">
+                        <h2 style="font-weight:bold; color:black !important">@Heading</h2>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <label for="name">Name</label>
+                            <InputText @bind-Value="appointment.Name" class="form-control" id="name" />
+                            <ValidationMessage For="@(() => appointment.Name)" />
+                        </div>
+                        <div>
+                            <label for="email">Email</label>
+                            <InputText @bind-Value="appointment.Email" class="form-control" id="email" />
+                            <ValidationMessage For="@(() => appointment.Email)" />
+                        </div>
+                        <div>
+                            <label for="date">Select Date</label>
+                            <InputDate @bind-Value="appointment.Date" class="form-control" id="date" />
+                            <ValidationMessage For="@(() => appointment.Date)" />
+                        </div>
+                        <div>
+                            <label for="department">Department</label>
+                            <InputSelect @bind-Value="appointment.Department" class="form-control" id="department">
+                                @if (departments != null)
+                                {
+                                    @foreach (var dept in departments)
+                                    {
+                                        <option value="@dept.Name">@dept.Name</option>
+                                    }
+                                }
+                            </InputSelect>
+                            <ValidationMessage For="@(() => appointment.Department)" />
+                        </div>
+                        <div>
+                            <label for="phone">Phone</label>
+                            <InputText @bind-Value="appointment.Phone" class="form-control" id="phone" />
+                            <ValidationMessage For="@(() => appointment.Phone)" />
+                        </div>
+                        <div>
+                            <label for="telehealth">Appointment Type</label>
+                            <InputSelect @bind-Value="appointment.IsTeleHealth" class="form-control" id="telehealth">
+                                <option value="true">Telehealth</option>
+                                <option value="false">In-person</option>
+                            </InputSelect>
+                            <ValidationMessage For="@(() => appointment.IsTeleHealth)" />
+                        </div>
+                        <div>
+                            <label for="doctor">Doctor</label>
+                            <InputSelect @bind-Value="appointment.DoctorId" class="form-control" id="doctor">
+                                <option value="">-- Select Doctor --</option>
+                                @if (doctors != null)
+                                {
+                                    @foreach (var doc in doctors)
+                                    {
+                                        <option value="@doc.Id">@doc.Name</option>
+                                    }
+                                }
+                            </InputSelect>
+                            <ValidationMessage For="@(() => appointment.DoctorId)" />
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <label for="message">Additional Message</label>
+                        <InputTextArea @bind-Value="appointment.AdditionalMessage" class="form-control" rows="5" id="message" />
+                        <button type="submit" style="background-color:var(--secondary-main);color:white; margin-top:15px; padding:10px;" class="form-control btn-app">
+                            <strong>@ButtonValue</strong>
+                        </button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</section>
+
+<Footer></Footer>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    public string Heading { get; set; } = "Make an Appointment";
+    public string ButtonValue { get; set; } = "Checkout";
+    public Appointment appointment = new();
+    public List<Department> departments = new();
+    public List<Doctor> doctors = new();
+    protected override async Task OnParametersSetAsync()
+    {
+        await LoadDepartmentsAsync();
+        await LoadDoctorsAsync();
+
+
+
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadDepartmentsAsync();
+        await LoadDoctorsAsync();
+
+        if (Id > 0)
+        {
+            Heading = "Edit Appointment";
+            ButtonValue = "Update";
+
+            appointment = await Http.GetFromJsonAsync<Appointment>($"https://localhost:7047/api/Appointments/{Id}");
+        }
+
+    }
+
+    private async Task LoadDepartmentsAsync()
+    {
+        departments = await Http.GetFromJsonAsync<List<Department>>("https://localhost:7047/api/Departments");
+        // departments = await Http.GetFromJsonAsync<List<string>>("api/departments");
+    }
+
+    private async Task LoadDoctorsAsync()
+    {
+        doctors = await Http.GetFromJsonAsync<List<Doctor>>("https://localhost:7047/api/Doctors/GetAll");
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        try
+        {
+            // Get patient by email
+            Patient patient = await Http.GetFromJsonAsync<Patient>($"https://localhost:7047/api/Patients/byemail/{appointment.Email}");
+            if (patient != null)
+            {
+                appointment.PatientId = patient.Id;
+            }
+
+            HttpResponseMessage response;
+            if (Id > 0)
+            {
+                response = await Http.PutAsJsonAsync($"https://localhost:7047/api/Appointments/{Id}", appointment);
+                if (response.IsSuccessStatusCode)
+                {
+                    Navigation.NavigateTo("/myappointments");
+                }
+            }
+            else
+            {
+                response = await Http.PostAsJsonAsync("https://localhost:7047/api/Appointments", appointment);
+                var appointment1 = await response.Content.ReadFromJsonAsync<Appointment>();
+                if (response.IsSuccessStatusCode)
+                {
+                    Navigation.NavigateTo($"/checkout/{appointment1.Id}");
+                }
+            }
+
+
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error processing appointment: {ex.Message}");
+        }
+    }
+
+
+}

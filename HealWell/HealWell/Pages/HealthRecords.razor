@@ -1,0 +1,53 @@
+﻿@page "/records/{PatientId:int}"
+@inject NavigationManager NavMan
+@inject HttpClient Http
+@using HealWell.Services
+@using HealWell.Models
+@inject PatientService patientservice
+<Header></Header>
+<div style="background-color:#FAFAFA">
+    <section class="portal-section">
+        <div class="container">
+            <h2 ><i class="fas fa-file-medical"></i> Health Records</h2>
+
+            @if (records == null || !records.Any())
+            {
+                <div class="empty-state">
+                    <i class="fas fa-file-medical fa-3x text-muted"></i>
+                    <p>No health records available.</p>
+                </div>
+            }
+            else
+            {
+                <div class="timeline">
+                    @foreach (var record in records)
+                    {
+                        <div class="timeline-item">
+                            <div class="timeline-icon">
+                                <i class="fas fa-file-medical"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h3 style="color:#000080 !important">@record.Title</h3>
+                                <p>@record.Description</p>
+                                <span class="timeline-time">@record.Date.ToShortDateString()</span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </section>
+</div>
+<Footer></Footer>
+
+@code {
+    private List<HealthRecord> records;
+    [Parameter]
+    public int PatientId { get; set; }
+    protected async override Task OnParametersSetAsync()
+    {
+
+        records = await patientservice.GetAllHealthRecords(PatientId);
+       
+    }
+}

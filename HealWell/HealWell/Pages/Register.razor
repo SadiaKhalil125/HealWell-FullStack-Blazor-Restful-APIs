@@ -1,0 +1,187 @@
+﻿@page "/register"
+@using HealWell.Services
+@inject NavigationManager Navigation
+@inject IJSRuntime JSRuntime
+@inject HttpClient Http
+@using HealWell.Models
+@using Microsoft.AspNetCore.Components.Forms
+@inject PatientService patientService
+<Header></Header>
+<div style="background-color:#FAFAFA">
+    <section class="register-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-7 col-md-9">
+                    <div class="register-card wow fadeInUp">
+                        <!-- Header -->
+                        <div class="register-header">
+                            @* <img src="images/medicare-logo.png" alt="MediCare+" class="register-logo" /> *@
+                            <h2 style="color: #0d47a1 !important">Create Your Account</h2>
+                            <p>Join MediCare+ to access personalized healthcare services</p>
+                        </div>
+
+                        <!-- Registration Form -->
+                        <EditForm Model="registerModel" OnValidSubmit="HandleRegistration">
+                            <DataAnnotationsValidator />
+                            <ValidationSummary class="validation-summary" />
+
+                            <!-- Name Fields -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="firstName">First Name*</label>
+                                        <InputText id="firstName" @bind-Value="registerModel.FirstName"
+                                        class="form-control" placeholder="John" />
+                                        <ValidationMessage For="@(() => registerModel.FirstName)" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="lastName">Last Name*</label>
+                                        <InputText id="lastName" @bind-Value="registerModel.LastName"
+                                        class="form-control" placeholder="Doe" />
+                                        <ValidationMessage For="@(() => registerModel.LastName)" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Email & Phone -->
+                            <div class="form-group">
+                                <label for="email">Email Address*</label>
+                                <InputText id="email" @bind-Value="registerModel.Email"
+                                type="email" class="form-control" placeholder="your@email.com" />
+                                <ValidationMessage For="@(() => registerModel.Email)" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">Phone Number*</label>
+                                <InputText id="phone" @bind-Value="registerModel.Phone"
+                                class="form-control" placeholder="+1 (123) 456-7890" />
+                                <ValidationMessage For="@(() => registerModel.Phone)" />
+                            </div>
+
+                            <!-- Password Fields -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="password">Password*</label>
+                                        <div class="password-input">
+                                            <InputText id="password" @bind-Value="registerModel.Password"
+                                            type="@(showPassword ? "text" : "password")"
+                                            class="form-control" placeholder="At least 8 characters" />
+                                            <span class="toggle-password" @onclick="TogglePassword">
+                                                <i class="fas @(showPassword ? "fa-eye-slash" : "fa-eye")"></i>
+                                            </span>
+                                        </div>
+                                        <ValidationMessage For="@(() => registerModel.Password)" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="confirmPassword">Confirm Password*</label>
+                                        <InputText id="confirmPassword" @bind-Value ="registerModel.ConfirmPassword"
+                                        type="@(showPassword ? "text" : "password")"
+                                        class="form-control" placeholder="Re-enter password" />
+                                        <ValidationMessage For="@(() => registerModel.ConfirmPassword)" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Terms & Conditions -->
+                            <div class="form-check mb-4">
+                                <InputCheckbox @bind-Value="registerModel.AcceptTerms" id="acceptTerms" class="form-check-input" />
+                                <label class="form-check-label" for="acceptTerms">
+                                    I agree to the <a href="/terms" target="_blank" style="color:#007bff !important">Terms & Conditions</a> and
+                                    <a href="/privacy" target="_blank" style="color:#007bff !important">Privacy Policy</a>
+                                </label>
+                                <ValidationMessage For="@(() => registerModel.AcceptTerms)" />
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" @onclick="HandleRegistration" class="btn-register" disabled="@isLoading">
+                                Create Account
+                                @* @if (isLoading) *@
+                                @* { *@
+                                @*     <span class="spinner-border spinner-border-sm me-2"></span> *@
+                                @*     <span>Creating Account...</span> *@
+                                @* } *@
+                                @* else *@
+                                @* { *@
+                                @*     <span><a style="text-decoration:none; color:white;" href="javascript:Blazor.navigateTo('/login')">Create Account</a></span> *@
+                                @* } *@
+                            </button>
+
+                            <!-- Login Redirect -->
+                            <div class="register-footer">
+                                <p>Already have an account? <a href="/login" style="color:#00897b !important">Sign In</a></p>
+                            </div>
+                        </EditForm>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<Footer></Footer>
+@code {
+    private RegisterModel registerModel = new();
+    private Patient patient=new();
+    private bool showPassword = false;
+    private bool isLoading = false;
+    private string? errorMessage;
+    
+   
+    private void TogglePassword()
+    {
+        showPassword = !showPassword;
+    }
+
+    private async Task HandleRegistration()
+    {
+        isLoading = true;
+        errorMessage = null;
+
+        try
+        {
+            patient = ConvertToPatient(registerModel);
+            
+            bool check = await patientService.register(patient);
+            if (check)
+            {
+                Navigation.NavigateTo("/login");
+            }
+            else
+            {
+                Navigation.NavigateTo("/");
+            }
+          
+        }
+        catch (Exception ex)
+        {
+            errorMessage = "Registration failed. Please try again.";
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+    private Patient ConvertToPatient(RegisterModel model)
+    {
+        return new Patient
+            {
+                Id = 0,
+                Name = $"{model.FirstName} {model.LastName}",
+                Email = model.Email,
+                Password = model.Password,
+                DBO=DateTime.UtcNow,
+                // You can set defaults or extend RegisterModel to include more patient-specific fields
+                PreviousPrescriptions = "",
+                LastBloodPressure = "",
+                Weight = 0,
+                AIC = 0,
+                ImmunizationsUpToDate = false
+            };
+    }
+
+ 
+}

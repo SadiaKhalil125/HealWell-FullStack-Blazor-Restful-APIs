@@ -1,0 +1,11 @@
+D:\SCD\HealWellBackEnd\Domain\bin\Debug\net8.0\Domain.deps.json
+D:\SCD\HealWellBackEnd\Domain\bin\Debug\net8.0\Domain.dll
+D:\SCD\HealWellBackEnd\Domain\bin\Debug\net8.0\Domain.pdb
+D:\SCD\HealWellBackEnd\Domain\obj\Debug\net8.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\SCD\HealWellBackEnd\Domain\obj\Debug\net8.0\Domain.AssemblyInfoInputs.cache
+D:\SCD\HealWellBackEnd\Domain\obj\Debug\net8.0\Domain.AssemblyInfo.cs
+D:\SCD\HealWellBackEnd\Domain\obj\Debug\net8.0\Domain.csproj.CoreCompileInputs.cache
+D:\SCD\HealWellBackEnd\Domain\obj\Debug\net8.0\Domain.dll
+D:\SCD\HealWellBackEnd\Domain\obj\Debug\net8.0\refint\Domain.dll
+D:\SCD\HealWellBackEnd\Domain\obj\Debug\net8.0\Domain.pdb
+D:\SCD\HealWellBackEnd\Domain\obj\Debug\net8.0\ref\Domain.dll

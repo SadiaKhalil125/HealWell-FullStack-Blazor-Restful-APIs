@@ -1,0 +1,122 @@
+﻿@page "/doctors"
+@using HealWell.Models
+@inject NavigationManager Navigation
+@inject HttpClient Http
+@using HealWell.Services
+@inject DoctorService doctorservice
+<Header></Header>
+
+<div class="search-section">
+    <div class="container">
+        <h1>Find Your Doctor</h1>
+        <p>Search from our network of certified healthcare professionals</p>
+
+        <div class="search-box">
+            <input @bind="searchQuery"
+            @bind:event="oninput"
+            type="text"
+            class="search-input"
+            placeholder="Search by name, specialty or condition..." />
+            <button class="search-btn" @onclick="SearchDoctors">
+                <i class="fas fa-search"></i> Search
+            </button>
+        </div>
+    </div>
+</div>
+
+<section class="filter-section">
+    <div class="container">
+        <h4>Filter by Specialty:</h4>
+        <div class="spec">
+            @foreach (var specialty in specialties)
+            {
+                <span class="filter-tag @(selectedSpecialty == specialty ? "active" : "")"
+                @onclick="() => FilterBySpecialty(specialty)">
+                    @specialty
+                </span>
+            }
+        </div>
+    </div>
+</section>
+
+<section class="doctors-section">
+    <div class="container">
+        <div class="row">
+            @if (filteredDoctors.Count == 0)
+            {
+                <div class="col-12 text-center">
+                    <p>No doctors found matching your criteria.</p>
+                </div>
+            }
+            else
+            {
+                @foreach (var doctor in filteredDoctors)
+                {
+                    <div class="col-md-4 mb-4">
+                        <DoctorCard Doctor="@doctor" />
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</section>
+
+<Footer></Footer>
+
+@code {
+    private string searchQuery = "";
+    private string selectedSpecialty = "";
+    private List<Doctor> doctors = new();
+    private List<Doctor> filteredDoctors = new();
+    private List<string> specialties = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        doctors = await doctorservice.GetAllAsync();
+        foreach(var doc in doctors) 
+        {
+            doc.ImageUrl = await doctorservice.GetImageUrl(doc.ImageUrl);
+        }
+       
+
+        specialties = doctors.Select(d => d.Specialty).Distinct().ToList();
+        filteredDoctors = doctors;
+      
+    }
+
+    private void SearchDoctors()
+    {
+        FilterDoctors();
+    }
+
+    private void FilterBySpecialty(string specialty)
+    {
+        selectedSpecialty = selectedSpecialty == specialty ? "" : specialty;
+        FilterDoctors();
+    }
+
+    // private void FilterDoctors()
+    // {
+    //     filteredDoctors = doctors
+    //         .Where(d => string.IsNullOrEmpty(searchQuery) ||
+    //               d.Name.Contains(searchQuery, StringComparison.OrdinalIgnoreCase) ||
+    //               d.Specialty.Contains(searchQuery, StringComparison.OrdinalIgnoreCase) ||
+    //               d.Hospital.Contains(searchQuery, StringComparison.OrdinalIgnoreCase))
+    //         .Where(d => string.IsNullOrEmpty(selectedSpecialty) ||
+    //               d.Specialty == selectedSpecialty)
+    //         .ToList();
+    // }
+    private async void FilterDoctors()
+    {
+        filteredDoctors = await doctorservice.GetDoctorsWithFilterAsync(searchQuery, selectedSpecialty);
+
+        foreach (var doc in filteredDoctors)
+        {
+            doc.ImageUrl = await doctorservice.GetImageUrl(doc.ImageUrl);
+        }
+
+        StateHasChanged();
+    }
+
+  
+}

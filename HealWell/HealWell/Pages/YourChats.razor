@@ -1,0 +1,143 @@
+﻿@page "/your-chats"
+@inject NavigationManager Navigation
+
+<Header></Header>
+
+<div class="med-chat-list-page">
+    <div class="container">
+        <h2 class="section-title" style="font-weight: bolder;">Your <span>Chats</span></h2>
+        <p class="section-subtitle">Connect with your healthcare providers</p>
+
+        @if (chats == null)
+        {
+            <div class="med-loading">
+                <div class="med-loading-spinner"></div>
+                <p>Loading your chats...</p>
+            </div>
+        }
+        else if (!chats.Any())
+        {
+            <div class="med-empty-state text-center p-4">
+                <i class="fas fa-comments fa-3x mb-3" style="color: var(--secondary-main);"></i>
+                <h5>No messages yet</h5>
+                <p style="color: var(--text-light);">Start chatting with a doctor to see it here.</p>
+                <a href="/doctors" class="btn-app" style="margin-top: 1rem;">
+                    <i class="fas fa-user-md"></i> Find a Doctor
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="med-chat-grid">
+                @foreach (var chat in chats)
+                {
+                    <div class="med-chat-card" @onclick="() => OpenChat(chat.DoctorId)">
+                        <div class="med-chat-header d-flex align-items-center gap-3">
+                            <div class="med-chat-image-container">
+                                <img src="/images/team-image@(chat.DoctorId % 3 + 1).jpg" alt="@chat.DoctorName" class="med-chat-image" />
+                                <div class="online-status @(chat.DoctorId == 1 ? "online" : "")"></div>
+                            </div>
+                            <div class="med-chat-info">
+                                <h5 style="color:black !important"class="mb-0">@chat.DoctorName</h5>
+                                <small style="color: var(--secondary-main);">@chat.DoctorSpecialty</small>
+                            </div>
+                            <div class="unread-badge ms-auto">
+                                @if (chat.DoctorId == 2)
+                                {
+                                    <span class="badge">1</span>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="med-chat-preview mt-2">
+                            <p class="mb-0" style="color: var(--text-light);">@Truncate(chat.LastMessage, 60)</p>
+                            <small class="text-muted">@ToRelativeTime(chat.LastMessageTime)</small>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
+
+<Footer></Footer>
+
+@code {
+    private List<Chat> chats;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadDummyData();
+    }
+
+    private async Task LoadDummyData()
+    {
+        // Simulate loading from service or API
+        await Task.Delay(300);
+
+        chats = new List<Chat>
+        {
+            new Chat {
+                Id = 1,
+                DoctorId = 1,
+                DoctorName = "Dr. Sarah Johnson",
+                DoctorSpecialty = "Cardiologist",
+                LastMessage = "Hi there, how can I help you today?",
+                LastMessageTime = DateTime.Now.AddMinutes(-10)
+            },
+            new Chat {
+                Id = 2,
+                DoctorId = 2,
+                DoctorName = "Dr. James Smith",
+                DoctorSpecialty = "Dermatologist",
+                LastMessage = "Please send your lab report for review.",
+                LastMessageTime = DateTime.Now.AddDays(-1)
+            },
+            new Chat {
+                Id = 3,
+                DoctorId = 3,
+                DoctorName = "Dr. Linda Moore",
+                DoctorSpecialty = "Pediatrician",
+                LastMessage = "Your child's symptoms are likely viral.",
+                LastMessageTime = DateTime.Now.AddDays(-2)
+            }
+        };
+    }
+
+    private void OpenChat(int doctorId)
+    {
+        Navigation.NavigateTo($"/chat/{doctorId}");
+    }
+
+    public class Chat
+    {
+        public int Id { get; set; }
+        public int DoctorId { get; set; }
+        public string DoctorName { get; set; }
+        public string DoctorSpecialty { get; set; }
+        public string LastMessage { get; set; }
+        public DateTime LastMessageTime { get; set; }
+    }
+
+    private string Truncate(string value, int maxLength)
+    {
+        if (string.IsNullOrEmpty(value)) return value;
+        return value.Length > maxLength ? value.Substring(0, maxLength) + "..." : value;
+    }
+
+    private string ToRelativeTime(DateTime time)
+    {
+        var timeDifference = DateTime.Now - time;
+
+        if (timeDifference.TotalMinutes < 1)
+            return "Just now";
+        if (timeDifference.TotalHours < 1)
+            return $"{(int)timeDifference.TotalMinutes} min ago";
+        if (timeDifference.TotalDays < 1)
+            return $"{(int)timeDifference.TotalHours} hr ago";
+        if (timeDifference.TotalDays < 7)
+            return $"{(int)timeDifference.TotalDays} day(s) ago";
+
+        return time.ToString("MMM dd");
+    }
+}

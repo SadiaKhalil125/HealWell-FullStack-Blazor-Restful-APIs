@@ -1,0 +1,762 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\SCD\\IMS2\\Project\\HealWell\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\models\\doctor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\models\\doctor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\pages\\doctordetail.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\pages\\doctordetail.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\pages\\doctorregister.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\pages\\doctorregister.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\models\\department.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\models\\department.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\wwwroot\\css\\styles.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\wwwroot\\css\\styles.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\pages\\header.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\pages\\header.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\pages\\admindashboard.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\pages\\admindashboard.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\models\\doctorregisterdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\models\\doctorregisterdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\pages\\chatconsultation.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\pages\\chatconsultation.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\pages\\editprofile.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\pages\\editprofile.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\models\\chatmessage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\models\\chatmessage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\services\\chatservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\services\\chatservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\models\\chat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\models\\chat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\pages\\doctorsearch.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\pages\\doctorsearch.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\services\\doctorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\services\\doctorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\models\\customauthorizationmessagehandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\models\\customauthorizationmessagehandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\models\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\models\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\healwell.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\healwell.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/HealWellDB/True/SqlTable/dbo.Doctors.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\services\\patientservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\services\\patientservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\pages\\services.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\pages\\services.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\models\\testimonial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\models\\testimonial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\pages\\patientsanalytics.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\pages\\patientsanalytics.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\wwwroot\\js\\chartinterop.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\wwwroot\\js\\chartinterop.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\models\\patient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\models\\patient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\pages\\register.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\pages\\register.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/HealWellDB/True/SqlTable/dbo.Patients.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/HealWellDB/True/SqlTable/dbo.Appointments.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\models\\registermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\models\\registermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\pages\\addappointment.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\pages\\addappointment.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\wwwroot\\css\\admindashboard.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\wwwroot\\css\\admindashboard.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\wwwroot\\css\\owl.theme.default.min.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\wwwroot\\css\\owl.theme.default.min.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|c:\\users\\dell\\.nuget\\packages\\chartjs.blazor.fork\\2.0.2\\contentfiles\\any\\netstandard2.1\\wwwroot\\chartjsblazorinterop.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\services\\checkoutservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\services\\checkoutservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\services\\appointmentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\services\\appointmentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\pages\\appointmentsummary.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\pages\\appointmentsummary.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\wwwroot\\js\\site.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\wwwroot\\js\\site.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\pages\\doctorlogin.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\pages\\doctorlogin.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\pages\\patientprofile.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\pages\\patientprofile.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\models\\jwttokenresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\models\\jwttokenresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|d:\\scd\\ims2\\project\\healwell\\healwell\\models\\itokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{109FCD9E-5943-4B81-B8D2-C85A9CDDDB88}|HealWell\\HealWell.csproj|solutionrelative:healwell\\models\\itokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Department.cs",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Models\\Department.cs",
+              "RelativeDocumentMoniker": "HealWell\\Models\\Department.cs",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Models\\Department.cs",
+              "RelativeToolTip": "HealWell\\Models\\Department.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-16T12:43:26.542Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DoctorRegister.razor",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\DoctorRegister.razor",
+              "RelativeDocumentMoniker": "HealWell\\Pages\\DoctorRegister.razor",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\DoctorRegister.razor",
+              "RelativeToolTip": "HealWell\\Pages\\DoctorRegister.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAMcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-23T11:15:25.93Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Doctor.cs",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Models\\Doctor.cs",
+              "RelativeDocumentMoniker": "HealWell\\Models\\Doctor.cs",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Models\\Doctor.cs",
+              "RelativeToolTip": "HealWell\\Models\\Doctor.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAgwB4AAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-26T03:07:34.379Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Home.razor",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\Home.razor",
+              "RelativeDocumentMoniker": "HealWell\\Pages\\Home.razor",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\Home.razor",
+              "RelativeToolTip": "HealWell\\Pages\\Home.razor",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAAAFwAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-25T11:22:32.17Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DoctorDetail.razor",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\DoctorDetail.razor",
+              "RelativeDocumentMoniker": "HealWell\\Pages\\DoctorDetail.razor",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\DoctorDetail.razor",
+              "RelativeToolTip": "HealWell\\Pages\\DoctorDetail.razor",
+              "ViewState": "AgIAAKUAAAAAAAAAAAAAALgAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-26T03:08:45.865Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "styles.css",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\wwwroot\\css\\styles.css",
+              "RelativeDocumentMoniker": "HealWell\\wwwroot\\css\\styles.css",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\wwwroot\\css\\styles.css",
+              "RelativeToolTip": "HealWell\\wwwroot\\css\\styles.css",
+              "ViewState": "AgIAANoBAAAAAAAAAAAQwO0BAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-05-23T10:57:14.332Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Header.razor",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\Header.razor",
+              "RelativeDocumentMoniker": "HealWell\\Pages\\Header.razor",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\Header.razor",
+              "RelativeToolTip": "HealWell\\Pages\\Header.razor",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAAACwAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-23T12:49:59.596Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AdminDashboard.razor",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\AdminDashboard.razor",
+              "RelativeDocumentMoniker": "HealWell\\Pages\\AdminDashboard.razor",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\AdminDashboard.razor",
+              "RelativeToolTip": "HealWell\\Pages\\AdminDashboard.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFkFAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-23T11:06:04.525Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "DoctorRegisterDto.cs",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Models\\DoctorRegisterDto.cs",
+              "RelativeDocumentMoniker": "HealWell\\Models\\DoctorRegisterDto.cs",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Models\\DoctorRegisterDto.cs",
+              "RelativeToolTip": "HealWell\\Models\\DoctorRegisterDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-23T13:03:49.577Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Program.cs",
+              "RelativeDocumentMoniker": "HealWell\\Program.cs",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Program.cs",
+              "RelativeToolTip": "HealWell\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-23T10:06:03.378Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ChatConsultation.razor",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\ChatConsultation.razor",
+              "RelativeDocumentMoniker": "HealWell\\Pages\\ChatConsultation.razor",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\ChatConsultation.razor",
+              "RelativeToolTip": "HealWell\\Pages\\ChatConsultation.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-05T10:39:39.679Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Login.razor",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\Login.razor",
+              "RelativeDocumentMoniker": "HealWell\\Pages\\Login.razor",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\Login.razor",
+              "RelativeToolTip": "HealWell\\Pages\\Login.razor",
+              "ViewState": "AgIAAGYAAAAAAAAAAAAAAHoAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-26T12:32:26.079Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "EditProfile.razor",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\EditProfile.razor",
+              "RelativeDocumentMoniker": "HealWell\\Pages\\EditProfile.razor",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\EditProfile.razor",
+              "RelativeToolTip": "HealWell\\Pages\\EditProfile.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFIAAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-23T11:12:41.864Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "_Imports.razor",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\_Imports.razor",
+              "RelativeDocumentMoniker": "HealWell\\_Imports.razor",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\_Imports.razor",
+              "RelativeToolTip": "HealWell\\_Imports.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-25T09:48:25.231Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "ChatMessage.cs",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Models\\ChatMessage.cs",
+              "RelativeDocumentMoniker": "HealWell\\Models\\ChatMessage.cs",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Models\\ChatMessage.cs",
+              "RelativeToolTip": "HealWell\\Models\\ChatMessage.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T10:48:08.076Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "ChatService.cs",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Services\\ChatService.cs",
+              "RelativeDocumentMoniker": "HealWell\\Services\\ChatService.cs",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Services\\ChatService.cs",
+              "RelativeToolTip": "HealWell\\Services\\ChatService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T10:54:42.311Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Chat.cs",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Models\\Chat.cs",
+              "RelativeDocumentMoniker": "HealWell\\Models\\Chat.cs",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Models\\Chat.cs",
+              "RelativeToolTip": "HealWell\\Models\\Chat.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T10:44:31.922Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "DoctorSearch.razor",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\DoctorSearch.razor",
+              "RelativeDocumentMoniker": "HealWell\\Pages\\DoctorSearch.razor",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\DoctorSearch.razor",
+              "RelativeToolTip": "HealWell\\Pages\\DoctorSearch.razor",
+              "ViewState": "AgIAAF0AAAAAAAAAAAAAAGYAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-23T11:22:25.509Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "TokenService.cs",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Models\\TokenService.cs",
+              "RelativeDocumentMoniker": "HealWell\\Models\\TokenService.cs",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Models\\TokenService.cs",
+              "RelativeToolTip": "HealWell\\Models\\TokenService.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABQAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-23T10:06:52.552Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "DoctorService.cs",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Services\\DoctorService.cs",
+              "RelativeDocumentMoniker": "HealWell\\Services\\DoctorService.cs",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Services\\DoctorService.cs",
+              "RelativeToolTip": "HealWell\\Services\\DoctorService.cs",
+              "ViewState": "AgIAAIcAAAAAAAAAAAAqwKYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-23T11:11:39.234Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "CustomAuthorizationMessageHandler.cs",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Models\\CustomAuthorizationMessageHandler.cs",
+              "RelativeDocumentMoniker": "HealWell\\Models\\CustomAuthorizationMessageHandler.cs",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Models\\CustomAuthorizationMessageHandler.cs",
+              "RelativeToolTip": "HealWell\\Models\\CustomAuthorizationMessageHandler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-23T10:06:46.241Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "HealWell.csproj",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\HealWell.csproj",
+              "RelativeDocumentMoniker": "HealWell\\HealWell.csproj",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\HealWell.csproj",
+              "RelativeToolTip": "HealWell\\HealWell.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-05-26T04:00:15.252Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "dbo.Doctors.sql",
+              "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/HealWellDB/True/SqlTable/dbo.Doctors.sql",
+              "ToolTip": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/HealWellDB/True/SqlTable/dbo.Doctors.sql",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2025-05-26T03:06:51.29Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "PatientService.cs",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Services\\PatientService.cs",
+              "RelativeDocumentMoniker": "HealWell\\Services\\PatientService.cs",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Services\\PatientService.cs",
+              "RelativeToolTip": "HealWell\\Services\\PatientService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAMkAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-23T11:12:48.309Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "Services.razor",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\Services.razor",
+              "RelativeDocumentMoniker": "HealWell\\Pages\\Services.razor",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\Services.razor",
+              "RelativeToolTip": "HealWell\\Pages\\Services.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-25T12:23:19.465Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "Testimonial.cs",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Models\\Testimonial.cs",
+              "RelativeDocumentMoniker": "HealWell\\Models\\Testimonial.cs",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Models\\Testimonial.cs",
+              "RelativeToolTip": "HealWell\\Models\\Testimonial.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-25T11:42:43.967Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "Patient.cs",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Models\\Patient.cs",
+              "RelativeDocumentMoniker": "HealWell\\Models\\Patient.cs",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Models\\Patient.cs",
+              "RelativeToolTip": "HealWell\\Models\\Patient.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-25T09:49:42.755Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "Register.razor",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\Register.razor",
+              "RelativeDocumentMoniker": "HealWell\\Pages\\Register.razor",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\Register.razor",
+              "RelativeToolTip": "HealWell\\Pages\\Register.razor",
+              "ViewState": "AgIAAKUAAAAAAAAAAAAAAK8AAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-25T10:03:25.975Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "PatientsAnalytics.razor",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\PatientsAnalytics.razor",
+              "RelativeDocumentMoniker": "HealWell\\Pages\\PatientsAnalytics.razor",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\PatientsAnalytics.razor",
+              "RelativeToolTip": "HealWell\\Pages\\PatientsAnalytics.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAMUAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-25T09:01:10.598Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "chartInterop.js",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\wwwroot\\js\\chartInterop.js",
+              "RelativeDocumentMoniker": "HealWell\\wwwroot\\js\\chartInterop.js",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\wwwroot\\js\\chartInterop.js",
+              "RelativeToolTip": "HealWell\\wwwroot\\js\\chartInterop.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-05-23T14:46:41.464Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "dbo.Patients.sql",
+              "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/HealWellDB/True/SqlTable/dbo.Patients.sql",
+              "ToolTip": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/HealWellDB/True/SqlTable/dbo.Patients.sql",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2025-05-25T10:41:47.839Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "dbo.Appointments.sql",
+              "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/HealWellDB/True/SqlTable/dbo.Appointments.sql",
+              "ToolTip": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/HealWellDB/True/SqlTable/dbo.Appointments.sql",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2025-05-25T10:41:07.837Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "RegisterModel.cs",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Models\\RegisterModel.cs",
+              "RelativeDocumentMoniker": "HealWell\\Models\\RegisterModel.cs",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Models\\RegisterModel.cs",
+              "RelativeToolTip": "HealWell\\Models\\RegisterModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-25T10:39:15.295Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "AddAppointment.razor",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\AddAppointment.razor",
+              "RelativeDocumentMoniker": "HealWell\\Pages\\AddAppointment.razor",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\AddAppointment.razor",
+              "RelativeToolTip": "HealWell\\Pages\\AddAppointment.razor",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-25T10:04:09.007Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "admindashboard.css",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\wwwroot\\css\\admindashboard.css",
+              "RelativeDocumentMoniker": "HealWell\\wwwroot\\css\\admindashboard.css",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\wwwroot\\css\\admindashboard.css",
+              "RelativeToolTip": "HealWell\\wwwroot\\css\\admindashboard.css",
+              "ViewState": "AgIAAIEAAAAAAAAAAAAAAOsBAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-05-25T07:34:41.975Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "owl.theme.default.min.css",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\wwwroot\\css\\owl.theme.default.min.css",
+              "RelativeDocumentMoniker": "HealWell\\wwwroot\\css\\owl.theme.default.min.css",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\wwwroot\\css\\owl.theme.default.min.css",
+              "RelativeToolTip": "HealWell\\wwwroot\\css\\owl.theme.default.min.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-05-25T08:20:48.245Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "index.html",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\wwwroot\\index.html",
+              "RelativeDocumentMoniker": "HealWell\\wwwroot\\index.html",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\wwwroot\\index.html",
+              "RelativeToolTip": "HealWell\\wwwroot\\index.html",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-05-23T14:54:03.452Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "ChartJsBlazorInterop.js",
+              "DocumentMoniker": "C:\\Users\\DELL\\.nuget\\packages\\chartjs.blazor.fork\\2.0.2\\contentFiles\\any\\netstandard2.1\\wwwroot\\ChartJsBlazorInterop.js",
+              "ToolTip": "C:\\Users\\DELL\\.nuget\\packages\\chartjs.blazor.fork\\2.0.2\\contentFiles\\any\\netstandard2.1\\wwwroot\\ChartJsBlazorInterop.js [Read Only]",
+              "ViewState": "AgIAAEAAAAAAAAAAALB8wA0AAAApAAAAAQAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-05-23T15:00:30.089Z",
+              "EditorCaption": " [Read Only]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "CheckoutService.cs",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Services\\CheckoutService.cs",
+              "RelativeDocumentMoniker": "HealWell\\Services\\CheckoutService.cs",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Services\\CheckoutService.cs",
+              "RelativeToolTip": "HealWell\\Services\\CheckoutService.cs",
+              "ViewState": "AgIAACwAAAAAAAAAAAAiwEMAAACEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-23T13:46:54.359Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "AppointmentService.cs",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Services\\AppointmentService.cs",
+              "RelativeDocumentMoniker": "HealWell\\Services\\AppointmentService.cs",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Services\\AppointmentService.cs",
+              "RelativeToolTip": "HealWell\\Services\\AppointmentService.cs",
+              "ViewState": "AgIAACMAAAAAAAAAAAAwwD0AAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-23T13:23:34.333Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "AppointmentSummary.razor",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\AppointmentSummary.razor",
+              "RelativeDocumentMoniker": "HealWell\\Pages\\AppointmentSummary.razor",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\AppointmentSummary.razor",
+              "RelativeToolTip": "HealWell\\Pages\\AppointmentSummary.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-23T12:50:25.358Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "site.js",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\wwwroot\\js\\site.js",
+              "RelativeDocumentMoniker": "HealWell\\wwwroot\\js\\site.js",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\wwwroot\\js\\site.js",
+              "RelativeToolTip": "HealWell\\wwwroot\\js\\site.js",
+              "ViewState": "AgIAAGsAAAAAAAAAAAAIwBQAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-05-23T12:49:37.142Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 42,
+              "Title": "DoctorLogin.razor",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\DoctorLogin.razor",
+              "RelativeDocumentMoniker": "HealWell\\Pages\\DoctorLogin.razor",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\DoctorLogin.razor",
+              "RelativeToolTip": "HealWell\\Pages\\DoctorLogin.razor",
+              "ViewState": "AgIAADkAAAAAAAAAAIBJwEcAAACOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-23T11:16:06.044Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 43,
+              "Title": "PatientProfile.razor",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\PatientProfile.razor",
+              "RelativeDocumentMoniker": "HealWell\\Pages\\PatientProfile.razor",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Pages\\PatientProfile.razor",
+              "RelativeToolTip": "HealWell\\Pages\\PatientProfile.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-23T10:59:16.541Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 44,
+              "Title": "JwtTokenResponse.cs",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Models\\JwtTokenResponse.cs",
+              "RelativeDocumentMoniker": "HealWell\\Models\\JwtTokenResponse.cs",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Models\\JwtTokenResponse.cs",
+              "RelativeToolTip": "HealWell\\Models\\JwtTokenResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-23T10:07:01.658Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 45,
+              "Title": "ITokenService.cs",
+              "DocumentMoniker": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Models\\ITokenService.cs",
+              "RelativeDocumentMoniker": "HealWell\\Models\\ITokenService.cs",
+              "ToolTip": "D:\\SCD\\IMS2\\Project\\HealWell\\HealWell\\Models\\ITokenService.cs",
+              "RelativeToolTip": "HealWell\\Models\\ITokenService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-23T10:06:56.313Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

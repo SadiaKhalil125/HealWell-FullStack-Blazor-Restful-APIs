@@ -1,0 +1,192 @@
+﻿@page "/doctor-portal/{DoctorId:int}"
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject ILogger<DoctorPortal> Logger
+@using HealWell.Services
+@inject DoctorService doctorservice
+@inject AppointmentService appointmentservice
+@inject PatientService patientservice
+@using HealWell.Models
+<PageTitle>Doctor Portal</PageTitle>
+<Header />
+
+<div style="background-color:#FAFAFA">
+    <!-- Portal Header -->
+    <section class="portal-header">
+        <div class="container">
+            <div class="portal-welcome">
+                <h1>Welcome, <span style="color:white">@doctor.Name</span></h1>
+                <p>Specialty: @doctor.Specialty | @doctor.Hospital</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Portal Section -->
+    <section class="portal-section">
+        <div class="container">
+            <div class="row">
+                <!-- Doctor Profile -->
+                <div class="col-md-4">
+                    <div class="portal-card doctor-profile">
+                        <div class="doctor-avatar">
+                            <img style="color:black !important" src="@doctor.ImageUrl" alt="Doctor Avatar" />
+                        </div>
+                        <div class="doctor-info" style="display:flex !important; flex-direction:column !important">
+                            <h3 style="color:black !important">@doctor.Name</h3>
+                            <p class="specialty">@doctor.Specialty</p>
+                            <div class="rating">
+                                <i class="fas fa-star"></i> @doctor.Rating.ToString("0.0")
+                                <span>(@doctor.ReviewCount reviews)</span>
+                            </div>
+                        </div>
+                        <div class="doctor-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-calendar-check"></i>
+                                <span>@doctor.AppointmentCount Appointments</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="col-md-8">
+                    <!-- Appointments -->
+                    <div class="portal-card">
+                        <div class="card-header">
+                            <h2 style="color:#00897b !important"><i style="color:#00897b !important" class="fas fa-calendar-day"></i> All Appointments</h2>
+                            @* <button class="btn-view-all" @onclick="NavigateToAppointments"> *@
+                            @*     View All <i class="fas fa-chevron-right"></i> *@
+                            @* </button> *@
+                        </div>
+
+                        @if (appointments.Any())
+                        {
+                            <div class="appointments-list">
+                                @foreach (var appointment in appointments)
+                                {
+                                    <div class="appointment-item">
+                                        <div class="appointment-time">
+                                            @appointment.Date.ToString("h:mm tt")
+                                        </div>
+                                        <div class="appointment-details">
+                                            <h3>@appointment.Patient.Name</h3>
+                                            <p>@appointment.AdditionalMessage</p>
+                                        </div>
+                                        <div class="appointment-actions">
+                                            <button class="btn-action" @onclick="() => ViewPatient(appointment.PatientId)">
+                                                <i class="fas fa-user-injured"></i>
+                                            </button>
+                                            <button class="btn-action" @onclick="() => AddPrescription(appointment.PatientId)">
+                                                <i class="fas fa-prescription"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="empty-state">
+                                <i class="fas fa-calendar-times"></i>
+                                <p>No appointments scheduled for today</p>
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Quick Actions -->
+                    @* <div class="quick-actions"> *@
+                    @*     <button class="quick-action-btn" @onclick="NavigateToPrescriptions"> *@
+                    @*         <i class="fas fa-prescription-bottle-alt"></i> *@
+                    @*         <span>Prescriptions</span> *@
+                    @*     </button> *@
+                    @*     <button class="quick-action-btn" @onclick="NavigateToRecords"> *@
+                    @*         <i class="fas fa-file-medical"></i> *@
+                    @*         <span>Health Records</span> *@
+                    @*     </button> *@
+                    @* </div> *@
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<Footer />
+
+@code {
+    private Doctor doctor = new();
+    private List<Appointment> appointments = new();
+    private bool isLoading = true;
+    [Parameter]
+    public int DoctorId { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            // Get doctor profile
+            doctor = await doctorservice.GetById(DoctorId);
+            doctor.ImageUrl = await doctorservice.GetImageUrl(doctor.ImageUrl);
+            // Get today's appointments
+            var today = DateTime.Today;
+            appointments = await appointmentservice.GetDoctorAppointments(DoctorId);
+            foreach(var app in appointments)
+            {
+                app.Patient = await patientservice.GetById(app.PatientId);
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error loading doctor portal data");
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private void NavigateToAppointments()
+    {
+        NavigationManager.NavigateTo("/doctor-appointments");
+    }
+
+    private void ViewPatient(int patientId)
+    {
+        NavigationManager.NavigateTo($"/doctor/patient/{patientId}/{DoctorId}");
+    }
+
+    private void AddPrescription(int patientId)
+    {
+        NavigationManager.NavigateTo($"/addprescription/{patientId}/{DoctorId}");
+    }
+
+    // private void NavigateToPrescriptions()
+    // {
+    //     NavigationManager.NavigateTo($"/prescriptions/{appointment.PatientId}");
+    // }
+
+    // private void NavigateToRecords()
+    // {
+    //     NavigationManager.NavigateTo("/health-records");
+    // }
+
+    // public class Doctor
+    // {
+    //     public int Id { get; set; }
+    //     public string Name { get; set; }
+    //     public string Specialty { get; set; }
+    //     public string ImageUrl { get; set; }
+    //     public double Rating { get; set; }
+    //     public int AppointmentCount { get; set; }
+    //     public int ReviewCount { get; set; }
+    //     public string Hospital { get; set; }
+    // }
+
+    // public class Appointment
+    // {
+    //     public int Id { get; set; }
+    //     public DateTime DateTime { get; set; }
+    //     public string PatientName { get; set; }
+    //     public int PatientId { get; set; }
+    //     public string Reason { get; set; }
+    // }
+}

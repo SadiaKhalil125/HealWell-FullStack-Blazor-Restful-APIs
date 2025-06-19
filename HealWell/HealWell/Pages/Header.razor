@@ -1,0 +1,105 @@
+﻿@inject IJSRuntime JSRuntime
+@inject NavigationManager Navigation
+<div class="container-fluid">
+    <div class="row ps-5 pt-2 pb-2 d-flex justify-content-between align-items-center">
+        <div class="col-md-4 col-sm-4 ps-5 text-start">
+            <p class="mb-0">Welcome to a Professional Health Care</p>
+        </div>
+
+        <div class="col-md-5 col-sm-6 pe-5 text-end d-flex justify-content-end gap-3 flex-wrap">
+            <span class="phone-icon p-1"><i class="fa fa-phone"></i> 010-060-0160</span>
+            <!-- <span class="date-icon m-1"><i class="fa fa-calendar-plus-o"></i> 6:00 AM - 10:00 PM (Mon-Fri)</span> -->
+            <span class="email-icon p-1"><i class="fa fa-envelope-o"></i> <a href="#">info@company.com</a></span>
+        </div>
+    </div>
+</div>
+
+<header style="padding:0 !important">
+    <div class="container header-container">
+        <a href="#" class="logo" >
+            <i class="fas fa-hospital logo-icon"></i>
+            <span class="logo-text">HealWell<span>+</span></span>
+        </a>
+
+        <nav class="nav-menu">
+            <ul style="gap:0.7rem !important">
+                <li><a style="font-size:medium !important; font-weight:bold" class="myls" href="javascript:Blazor.navigateTo('/')">Home</a></li>
+                <li><a style="font-size:medium !important; font-weight:bold" class="myls" href="javascript:Blazor.navigateTo('/services')">Services</a></li>
+                <li><a style="font-size:medium !important; font-weight:bold" class="myls" href="javascript:Blazor.navigateTo('/doctors')">Doctors</a></li>
+                @* <li><a class="myls" href="javascript:Blazor.navigateTo('/login')">Login</a></li> *@
+                <li><a style="font-size:medium !important; font-weight:bold" class="myls" href="javascript:Blazor.navigateTo('/about')">About</a></li>
+                <li><a style="font-size:medium!important; font-weight:bold" class="myls" href="javascript:Blazor.navigateTo('/contact')">Contact</a></li>
+                
+                <li><a style="font-size:medium !important; font-weight:bold" class="myls" @onclick="@(()=>dowork())">AI ChatBot</a></li>
+                <li><a style="font-size:medium !important; font-weight:bold" class="myls" href="javascript:Blazor.navigateTo('/doctor-login')">DoctorPortal</a></li>
+            </ul>
+        </nav>
+
+        <div class="header-actions" >
+            <div class="appointment-btn" style="margin-right:8px !important">
+                <a style="text-decoration:none"href="javascript:Blazor.navigateTo('/appointment')">
+                    <span class="appbtn">Book Appointment</span>
+                    <i class="  appbtn fas fa-calendar-check"></i>
+                </a>
+            </div>
+            <div class="theme-toggle">
+                <button  @onclick="ToggleTheme" class="btn-theme">
+                    <i class="@(isDarkMode ? "fas fa-sun" : "fas fa-moon")"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<style>
+    /* Top Bar */
+ 
+</style>
+
+@code {
+    private bool isDarkMode = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var savedTheme = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "theme");
+            isDarkMode = savedTheme == "dark";
+            await SetTheme(isDarkMode);
+            StateHasChanged();
+        }
+    }
+    private async Task dowork()
+    {
+
+        var idString = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", "userId");
+        if (int.TryParse(idString, out var userId))
+        {
+            Navigation.NavigateTo($"/chat-consultation/{userId}");
+        }
+        else{
+            Navigation.NavigateTo("/");
+
+        }
+
+    }
+    private async Task ToggleTheme()
+    {
+        isDarkMode = !isDarkMode;
+        await SetTheme(isDarkMode);
+    }
+
+    private async Task SetTheme(bool darkMode)
+    {
+        if (darkMode)
+        {
+            await JSRuntime.InvokeVoidAsync("document.body.classList.add", "dark-theme");
+            await JSRuntime.InvokeVoidAsync("localStorage.setItem", "theme", "dark");
+        }
+        else
+        {
+            await JSRuntime.InvokeVoidAsync("document.body.classList.remove", "dark-theme");
+            await JSRuntime.InvokeVoidAsync("localStorage.setItem", "theme", "light");
+        }
+    }
+}

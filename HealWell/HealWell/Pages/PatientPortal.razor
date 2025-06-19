@@ -1,0 +1,415 @@
+﻿@page "/portal/{Id:int}"
+@inject NavigationManager NavigationManager
+@using HealWell.Models
+@inject HttpClient Http
+@using HealWell.Services
+@inject PatientService patientservice
+<PageTitle>Patient Portal</PageTitle>
+<Header></Header>
+<div style="background-color:#FAFAFA">
+    <!-- Portal Header -->
+    <section class="portal-header">
+        <div class="container">
+            <div class="portal-welcome">
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                    <div>
+                        <h1>Welcome back, <span style="color:white">@patientData.FirstName</span></h1>
+                        <p>Your health information and tools all in one place</p>
+                    </div>
+                    <button class="btn-edit-profile" @onclick="HandleEditEvent">
+                        <i class="fas fa-user-edit"></i> Edit Profile
+                    </button>
+                </div>
+            </div>
+            <div class="portal-alert">
+                <i class="fas fa-exclamation-circle"></i>
+                <span>You have @patientData.UnreadMessages unread message@(patientData.UnreadMessages != 1 ? "s" : "")</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rest of your existing code remains the same -->
+
+    <!-- Main Portal Section -->
+    <section class="portal-section" >
+        <div class="container">
+            <div class="row" >
+                <!-- Quick Actions -->
+                <div class="col-md-4" >
+                    <div style="background-color:#00897b; padding: 20px; margin:10px; border-radius: 10px;">
+
+                        <!-- First Row: Title with Icon -->
+                        <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                            <i  class="fas fa-bolt" style="color: white; font-size: 24px; margin-right: 10px;"></i>
+                            <h2 style="color: white; margin: 0;">Quick Actions</h2>
+                        </div>
+
+                        <!-- Actions Grid -->
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px;">
+
+                            <button @onclick="@(() => NavigationManager.NavigateTo("/appointment"))" style="background-color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer;">
+                                <i style="color: dimgrey;" class="fas fa-calendar-plus"></i>
+                                <span style="color: dimgrey; font-weight: bold; display: block; margin-top: 5px;">
+                                    <a  style="color: dimgrey !important; text-decoration: none;">New Appointment</a>
+                                </span>
+                            </button>
+
+                            <button style="background-color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer;" @onclick="ToggleMessages">
+                                <i style="color: dimgrey;"class="fas fa-envelope"></i>
+                                <span style="color: dimgrey; font-weight: bold; display: block; margin-top: 5px;">
+                                    Messages (@patientData.UnreadMessages)
+                                </span>
+                            </button>
+
+                            <button style="background-color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer;" @onclick="@(() => NavigationManager.NavigateTo($"/records/{patient.Id}"))">
+                                <i style="color: dimgrey;" class="fas fa-file-medical"></i>
+                                <span style="color: dimgrey; font-weight: bold; display: block; margin-top: 5px;">Health Records</span>
+                            </button>
+
+                            <button style="background-color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer;" @onclick="@(() => NavigationManager.NavigateTo($"/prescriptions/{patient.Id}"))">
+                                <i style="color: dimgrey;" class="fas fa-prescription-bottle-alt"></i>
+                                <span style="color: dimgrey; font-weight: bold; display: block; margin-top: 5px;">Prescriptions</span>
+                            </button>
+
+                            <button style="background-color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer;" @onclick="@(() => NavigationManager.NavigateTo($"/myappointments/{patient.Id}"))">
+                                <i style="color: dimgrey;" class="fas fa-calendar"></i>
+                                <span style="color: dimgrey; font-weight: bold; display: block; margin-top: 5px;">My Appointments</span>
+                            </button>
+
+                        </div>
+                    </div>
+
+
+                    <!-- Upcoming Appointments -->
+                    <div class="portal-card">
+                        <h2 style="color:#00897b !important"><i style="color:#00897b !important" class="fas fa-calendar-day"></i> Upcoming</h2>
+                        @if (patientData.UpcomingAppointments.Any())
+                        {
+                            foreach (var appointment in patientData.UpcomingAppointments)
+                            {
+                                <div class="appointment-item">
+                                    <div class="appointment-date">
+                                        <span style="color:white" class="day">@appointment.Date.ToString("dd")</span>
+                                        <span style="color:white" class="month">@appointment.Date.ToString("MMM")</span>
+                                    </div>
+                                    <div class="appointment-details">
+                                        <h3 style="color:black !important">@appointment.ServiceType</h3>
+                                        <p >@appointment.Date.ToString("h:mm tt") with @appointment.DoctorName</p>
+                                        @if (appointment.IsTelehealth)
+                                        {
+                                            <span class="telehealth-badge"><i class="fas fa-video"></i> Telehealth</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="location">@appointment.Location</span>
+                                        }
+                                    </div>
+                                    <button class="appointment-action" @onclick="() => ViewAppointmentDetails(appointment.Id)">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="empty-state">
+                                <i class="fas fa-calendar-times"></i>
+                                <p>No upcoming appointments</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="col-md-8">
+                    <!-- Health Summary -->
+                    <div class="portal-card health-summary">
+                        <h2 style="color: #00897b !important"><i style="color:#00897b !important" class="fas fa-heartbeat"></i> Health Summary</h2>
+                        <div class="summary-grid">
+                            <div class="summary-item">
+                                <div style="color:black !important" class="summary-value">@patientData.LastBloodPressure</div>
+                                <div class="summary-label">Blood Pressure</div>
+                                <div class="summary-trend @(patientData.BpTrend == "up" ? "trend-up" : "trend-down")">
+                                    <i class="fas fa-arrow-@patientData.BpTrend"></i>
+                                </div>
+                            </div>
+                            <div class="summary-item">
+                                <div style="color:black !important" class="summary-value">@patientData.LastWeight lbs</div>
+                                <div class="summary-label">Weight</div>
+                                <div class="summary-trend @(patientData.WeightTrend == "up" ? "trend-up" : "trend-down")">
+                                    <i class="fas fa-arrow-@patientData.WeightTrend"></i>
+                                </div>
+                            </div>
+                            <div class="summary-item">
+                                <div style="color:black !important" class="summary-value">@patientData.LastA1c%</div>
+                                <div class="summary-label">A1C</div>
+                                <div class="summary-trend @(patientData.A1cTrend == "up" ? "trend-up" : "trend-down")">
+                                    <i class="fas fa-arrow-@patientData.A1cTrend"></i>
+                                </div>
+                            </div>
+                            <div class="summary-item">
+                                <div style="color:black !important" class="summary-value">@patientData.ImmunizationsUpToDate</div>
+                                <div class="summary-label">Immunizations</div>
+                                <div class="summary-status @(patientData.ImmunizationsUpToDate == true ? "status-good" : "status-warning")">
+                                    <i class="fas fa-@(patientData.ImmunizationsUpToDate == true ? "check" : "exclamation")"></i>
+                                </div>
+                            </div>
+                        </div>
+                        @* <button class="btn-view-all" @onclick="() => NavigationManager.NavigateTo('/health-metrics')"> *@
+                        <button class="btn-view-all" >
+                            View All Health Metrics <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+
+                    <!-- Messages (Conditional) -->
+                    @if (showMessages)
+                    {
+                        <div class="portal-card messages">
+                            <div class="messages-header">
+                                <h2><i class="fas fa-envelope"></i> Messages</h2>
+                                @* <button class="btn-new-message" @onclick="() => NavigationManager.NavigateTo('/messages/new')"> *@
+                                @* <button class="btn-new-message"> *@
+                                @*     <i class="fas fa-plus"></i> New Message *@
+                                @* </button> *@
+                            </div>
+                            <div class="messages-list">
+                                @foreach (var message in patientData.RecentMessages)
+                                {
+                                    <div class="message-item @(message.IsUnread ? "unread" : "")">
+                                        <div class="message-sender">
+                                            <div class="sender-avatar">
+                                                @if (message.IsDoctor)
+                                                {
+                                                    <i class="fas fa-user-md"></i>
+                                                }
+                                                else
+                                                {
+                                                    <i class="fas fa-user"></i>
+                                                }
+                                            </div>
+                                            <div class="sender-info">
+                                                <h3>@message.SenderName</h3>
+                                                <p>@message.SenderTitle</p>
+                                            </div>
+                                        </div>
+                                        <div class="message-preview">
+                                            <h4>@message.Subject</h4>
+                                            <p>@message.PreviewText</p>
+                                        </div>
+                                        <div class="message-meta">
+                                            <span class="time">@message.SentTime</span>
+                                            @if (message.HasAttachment)
+                                            {
+                                                <i class="fas fa-paperclip"></i>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            @* <button class="btn-view-all" @onclick="() => NavigationManager.NavigateTo('/messages')"> *@
+                            <button class="btn-view-all">
+                                View All Messages <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    }
+
+                    <!-- Recent Activity -->
+                    <div class="portal-card activity">
+                        <h2 style="color:#00897b !important"><i style="color:#00897b !important" class="fas fa-history"></i> Recent Activity</h2>
+                        <div class="timeline">
+                            @foreach (var activity in patientData.RecentActivity)
+                            {
+                                <div class="timeline-item">
+                                    <div class="timeline-icon">
+                                        <i style="color:white" class="fas fa-@activity.Icon"></i>
+                                    </div>
+                                    <div class="timeline-content">
+                                        <h3 style="color: #0d47a1 !important">@activity.Title</h3>
+                                        <p>@activity.Description</p>
+                                        <span class="timeline-time">@activity.Time</span>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<Footer></Footer>
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+    private bool showMessages = false;
+    private PatientData patientData = new PatientData();
+
+    private Patient? patient;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        patient = await patientservice.GetById(Id);
+        // In a real app, you would get this from an API
+        patientData = new PatientData
+            {
+                FirstName = patient.Name,
+                UnreadMessages = 3,
+                UpcomingAppointments = new List<Appointment>
+            {
+                new Appointment
+                {
+                    Id = 1,
+                    Date = DateTime.Now.AddDays(2),
+                    ServiceType = "Cardiology Follow-up",
+                    DoctorName = "Dr. Miasha Nakahara",
+                    Location = "Main Campus, Room 302",
+                    IsTelehealth = false
+                },
+                new Appointment
+                {
+                    Id = 2,
+                    Date = DateTime.Now.AddDays(7),
+                    ServiceType = "Annual Physical",
+                    DoctorName = "Dr. Robert Brown",
+                    Location = "Virtual Visit",
+                    IsTelehealth = true
+                }
+            },
+                LastBloodPressure = patient.LastBloodPressure,
+                BpTrend = "down",
+                LastWeight = patient.Weight,
+                WeightTrend = "down",
+                LastA1c = patient.AIC,
+                A1cTrend = "down",
+                ImmunizationsUpToDate = patient.ImmunizationsUpToDate,
+                RecentMessages = new List<PortalMessage>
+            {
+                new PortalMessage
+                {
+                    SenderName = "Dr. Miasha Nakahara",
+                    SenderTitle = "Cardiologist",
+                    Subject = "Test Results",
+                    PreviewText = "Your recent blood work shows improvement...",
+                    SentTime = "2 hours ago",
+                    IsUnread = true,
+                    IsDoctor = true,
+                    HasAttachment = true
+                },
+                new PortalMessage
+                {
+                    SenderName = "Billing Department",
+                    SenderTitle = "HealWell+ Finance",
+                    Subject = "Payment Confirmation",
+                    PreviewText = "We've received your payment of $175.00...",
+                    SentTime = "1 day ago",
+                    IsUnread = true,
+                    IsDoctor = false,
+                    HasAttachment = false
+                },
+                new PortalMessage
+                {
+                    SenderName = "Dr. Robert Brown",
+                    SenderTitle = "Primary Care",
+                    Subject = "Prescription Refill",
+                    PreviewText = "I've renewed your prescription for...",
+                    SentTime = "3 days ago",
+                    IsUnread = false,
+                    IsDoctor = true,
+                    HasAttachment = false
+                }
+            },
+                RecentActivity = new List<PortalActivity>
+            {
+                new PortalActivity
+                {
+                    Icon = "file-medical",
+                    Title = "Lab Results Available",
+                    Description = "Complete Blood Count results are now available",
+                    Time = "Today, 9:30 AM"
+                },
+                new PortalActivity
+                {
+                    Icon = "calendar-check",
+                    Title = "Appointment Confirmed",
+                    Description = "Your cardiology follow-up was scheduled",
+                    Time = "Yesterday, 2:15 PM"
+                },
+                new PortalActivity
+                {
+                    Icon = "prescription-bottle-alt",
+                    Title = "Prescription Refilled",
+                    Description = "Lisinopril 10mg was refilled",
+                    Time = "May 12, 2025"
+                },
+                new PortalActivity
+                {
+                    Icon = "credit-card",
+                    Title = "Payment Processed",
+                    Description = "Payment of $175.00 was completed",
+                    Time = "May 10, 2025"
+                }
+            }
+            };
+    }
+
+    private void ToggleMessages()
+    {
+        showMessages = !showMessages;
+    }
+
+    private void ViewAppointmentDetails(int id)
+    {
+        NavigationManager.NavigateTo($"/appointments/{id}");
+    }
+    private void HandleEditEvent()
+    {
+        NavigationManager.NavigateTo($"/editprofile/{Id}");
+    }
+
+    public class PatientData
+    {
+        public string FirstName { get; set; }
+        public int UnreadMessages { get; set; }
+        public List<Appointment> UpcomingAppointments { get; set; } = new();
+        public string LastBloodPressure { get; set; }
+        public string BpTrend { get; set; }
+        public float LastWeight { get; set; }
+        public string WeightTrend { get; set; }
+        public float LastA1c { get; set; }
+        public string A1cTrend { get; set; }
+        public bool ImmunizationsUpToDate { get; set; }
+        public List<PortalMessage> RecentMessages { get; set; } = new();
+        public List<PortalActivity> RecentActivity { get; set; } = new();
+    }
+
+    public class Appointment
+    {
+        public int Id { get; set; }
+        public DateTime Date { get; set; }
+        public string ServiceType { get; set; }
+        public string DoctorName { get; set; }
+        public string Location { get; set; }
+        public bool IsTelehealth { get; set; }
+    }
+
+    public class PortalMessage
+    {
+        public string SenderName { get; set; }
+        public string SenderTitle { get; set; }
+        public string Subject { get; set; }
+        public string PreviewText { get; set; }
+        public string SentTime { get; set; }
+        public bool IsUnread { get; set; }
+        public bool IsDoctor { get; set; }
+        public bool HasAttachment { get; set; }
+    }
+
+    public class PortalActivity
+    {
+        public string Icon { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string Time { get; set; }
+    }
+}

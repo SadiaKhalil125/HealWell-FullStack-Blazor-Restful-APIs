@@ -1,0 +1,200 @@
+﻿@page "/doctor/register"
+@inject HttpClient Http
+@using Microsoft.AspNetCore.Components.Forms
+@using System.Net.Http.Headers
+@using HealWell.Models
+@inject NavigationManager Nav
+<Header />
+
+<div class="doctor-registration-container">
+    <div class="container">
+        <div class="registration-card">
+            <h2 class="section-title" style="font-weight: bolder;">Doctor <span>Registration</span></h2>
+            <p class="section-subtitle">Join our network of healthcare professionals</p>
+
+            <EditForm Model="@doctor" OnValidSubmit="HandleValidSubmit">
+                <DataAnnotationsValidator />
+                <ValidationSummary class="validation-summary" />
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <InputText class="form-control" @bind-Value="doctor.Name" />
+                        <ValidationMessage For="@(() => doctor.Name)" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Specialty</label>
+                        <InputText class="form-control" @bind-Value="doctor.Specialty" />
+                        <ValidationMessage For="@(() => doctor.Specialty)" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <InputText class="form-control" @bind-Value="doctor.Email" />
+                        <ValidationMessage For="@(() => doctor.Email)" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Hospital/Clinic</label>
+                        <InputText class="form-control" @bind-Value="doctor.Hospital" />
+                        <ValidationMessage For="@(() => doctor.Hospital)" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Professional Bio</label>
+                    <InputTextArea class="form-control" rows="3" @bind-Value="doctor.Bio" />
+                    <ValidationMessage For="@(() => doctor.Bio)" />
+                </div>
+
+                <div class="form-group">
+                    <label>Professional Experience</label>
+                    <InputTextArea class="form-control" rows="3" @bind-Value="doctor.Experience" />
+                    <ValidationMessage For="@(() => doctor.Experience)" />
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Education (comma separated)</label>
+                        <InputText class="form-control" @bind-Value="educationInput" />
+                        <small class="form-text">Example: MD Harvard University, Residency Mayo Clinic</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Available Days (comma separated)</label>
+                        <InputText class="form-control" @bind-Value="availableDaysInput" />
+                        <small class="form-text">Example: Monday, Wednesday, Friday</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Available DateTimes (comma separated)</label>
+                    <InputText class="form-control" @bind-Value="availableDateTimesInput" />
+                    <small class="form-text">Format: 2025-05-12T14:00, 2025-05-13T09:30</small>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Department ID</label>
+                        <InputNumber class="form-control" @bind-Value="doctor.DepartmentId" />
+                        <ValidationMessage For="@(() => doctor.DepartmentId)" />
+                    </div>
+
+                    <div class="form-group form-check-container">
+                        <div class="form-check">
+                            <InputCheckbox class="form-check-input" @bind-Value="doctor.IsActive" />
+                            <label class="form-check-label " style="margin-left:50px">Active</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Profile Image</label>
+                    <div class="file-upload-container">
+                        <InputFile class="file-upload-input" OnChange="HandleFileSelected" />
+                        <div class="file-upload-label">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <span>@(imageFile != null ? imageFile.Name : "Choose a file...")</span>
+                        </div>
+                    </div>
+                    <small class="form-text">Max 10MB (JPEG, PNG)</small>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-app">
+                        <i class="fas fa-user-md"></i> Register Doctor
+                    </button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+<Footer/>
+@code {
+    private DoctorRegisterDto doctor = new();
+    private string educationInput;
+    private string availableDaysInput;
+    private string availableDateTimesInput;
+    private IBrowserFile imageFile;
+
+    private void HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        imageFile = e.File;
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        // Parse comma-separated inputs to lists
+        doctor.Education = educationInput?.Split(',', StringSplitOptions.RemoveEmptyEntries)
+            .Select(x => x.Trim()).ToList() ?? new List<string>();
+
+        doctor.AvailableDays = availableDaysInput?.Split(',', StringSplitOptions.RemoveEmptyEntries)
+            .Select(x => x.Trim()).ToList() ?? new List<string>();
+
+        doctor.AvailableDateTimes = availableDateTimesInput?.Split(',', StringSplitOptions.RemoveEmptyEntries)
+            .Select(x =>
+            {
+                bool success = DateTime.TryParse(x.Trim(), out var dt);
+                return success ? (DateTime?)dt : null;
+            })
+            .Where(x => x.HasValue)
+            .Select(x => x.Value)
+            .ToList() ?? new List<DateTime>();
+
+        var formData = new MultipartFormDataContent();
+
+        // Add simple properties
+        formData.Add(new StringContent(doctor.Name ?? ""), "Name");
+        formData.Add(new StringContent(doctor.Specialty ?? ""), "Specialty");
+        formData.Add(new StringContent(doctor.Email ?? ""), "Email");
+        formData.Add(new StringContent(doctor.Hospital ?? ""), "Hospital");
+        formData.Add(new StringContent(doctor.Bio ?? ""), "Bio");
+        formData.Add(new StringContent(doctor.Experience ?? ""), "Experience");
+        formData.Add(new StringContent(doctor.DepartmentId.ToString()), "DepartmentId");
+        formData.Add(new StringContent(doctor.IsActive.ToString()), "IsActive");
+
+        // Add each Education entry separately
+        foreach (var edu in doctor.Education)
+        {
+            formData.Add(new StringContent(edu), "Education");
+        }
+
+        // Add each AvailableDay separately
+        foreach (var day in doctor.AvailableDays)
+        {
+            formData.Add(new StringContent(day), "AvailableDays");
+        }
+
+        // Add each AvailableDateTime separately (ISO 8601 format)
+        foreach (var dt in doctor.AvailableDateTimes)
+        {
+            formData.Add(new StringContent(dt.ToString("o")), "AvailableDateTimes");
+        }
+
+        // Add image file if selected
+        if (imageFile != null)
+        {
+            var fileContent = new StreamContent(imageFile.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024));
+            fileContent.Headers.ContentType = new MediaTypeHeaderValue(imageFile.ContentType);
+            formData.Add(fileContent, "image", imageFile.Name);
+        }
+
+        var response = await Http.PostAsync("https://localhost:7047/api/Doctors/register", formData);
+
+        if (response.IsSuccessStatusCode)
+        {
+            Console.WriteLine("Doctor registered successfully!");
+            Nav.NavigateTo("/admin");
+            // Optionally clear form or show success UI
+        }
+        else
+        {
+            var errorMsg = await response.Content.ReadAsStringAsync();
+            Console.WriteLine($"Failed to register doctor: {errorMsg}");
+            // Optionally display error message on UI
+        }
+    }
+}

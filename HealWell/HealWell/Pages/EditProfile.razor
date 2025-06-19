@@ -1,0 +1,155 @@
+﻿@page "/editprofile/{Id:int}"
+@using HealWell.Models
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject ILogger<EditProfile> Logger
+@using Microsoft.AspNetCore.Components.Forms
+@using HealWell.Services
+@inject PatientService patientservice
+<Header />
+
+<div class="edit-profile-container" style="padding: 2rem 0;">
+    <div class="container">
+        <div class="edit-profile-card">
+            <h2 style="color: #00897b !important;">
+                <i class="fas fa-user-edit" style="color: #00897b;"></i> Edit Profile
+            </h2>
+
+            @if (isLoading)
+            {
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner fa-spin"></i> Loading profile...
+                </div>
+            }
+            else if (patient != null)
+            {
+                <EditForm Model="@patient" OnValidSubmit="@HandleValidSubmit">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+
+                    <div class="form-group">
+                        <label>Name</label>
+                        <InputText class="form-control" @bind-Value="patient.Name" />
+                        <ValidationMessage For="@(() => patient.Name)" />
+                    </div>
+
+                    @* <div class="form-group"> *@
+                    @*     <label>Last Name</label> *@
+                    @*     <InputText class="form-control" @bind-Value="patient.LastName" /> *@
+                    @*     <ValidationMessage For="@(() => patient.LastName)" /> *@
+                    @* </div> *@
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <InputText class="form-control" @bind-Value="patient.Email" />
+                        <ValidationMessage For="@(() => patient.Email)" />
+                    </div>
+
+                    @* <div class="form-group"> *@
+                    @*     <label>Phone</label> *@
+                    @*     <InputText class="form-control" @bind-Value="patient.Phone" /> *@
+                    @*     <ValidationMessage For="@(() => patient.Phone)" /> *@
+                    @* </div> *@
+
+                    <div class="form-group">
+                        <label>Blood Pressure</label>
+                        <InputText class="form-control" @bind-Value="patient.LastBloodPressure" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Weight (lbs)</label>
+                        <InputNumber class="form-control" @bind-Value="patient.Weight" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>A1C Level</label>
+                        <InputNumber class="form-control" @bind-Value="patient.AIC" />
+                    </div>
+
+                    <div class="form-check">
+                        <InputCheckbox class="form-check-input" @bind-Value="patient.ImmunizationsUpToDate" />
+                        <label class="form-check-label">Immunizations up to date</label>
+                    </div>
+                     <div class="form-check">
+                         <label style="padding-top:20px">DOB</label>
+                        <InputDate class="form-check-input" style="margin-left:42px;" @bind-Value="patient.DBO" />
+                        <label class="form-check-label">Date Of Birth</label>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-save" @onclick="HandleValidSubmit">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                        <button type="button" class="btn-cancel" @onclick="Cancel">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                    </div>
+                </EditForm>
+            }
+            else
+            {
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-triangle"></i> Patient not found
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<Footer />
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private Patient patient = new();
+    private bool isLoading = true;
+    private string errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+
+            patient = await patientservice.GetById(Id);
+
+        }
+        catch (Exception ex)
+        {
+            errorMessage = "Failed to load patient data";
+            Logger.LogError(ex, $"Error loading patient {Id}");
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        try
+        {
+            var response = await patientservice.EditPatient(patient);
+            if (response)
+            {
+                NavigationManager.NavigateTo($"/portal/{patient.Id}");
+            }
+            else
+            {
+                errorMessage = "Unable to update";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = "Error updating profile";
+            Logger.LogError(ex, "Profile update error");
+        }
+    }
+
+    private void Cancel()
+    {
+        NavigationManager.NavigateTo($"/portal/{Id}");
+    }
+
+    
+}

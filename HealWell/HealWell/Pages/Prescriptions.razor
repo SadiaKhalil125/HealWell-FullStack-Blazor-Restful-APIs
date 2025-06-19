@@ -1,0 +1,63 @@
+﻿@page "/prescriptions/{PatientId:int}"
+@inject HttpClient Http
+@inject NavigationManager NavMan
+@using HealWell.Services
+@inject PatientService patientservice
+@using HealWell.Models
+<Header></Header>
+<div style="background-color:#FAFAFA">
+    <section class="portal-section">
+        <div class="container">
+            <h2><i class="fas fa-prescription-bottle-alt"></i> Your Prescriptions</h2>
+
+            @if (prescriptions == null || !prescriptions.Any())
+            {
+                <div class="empty-state">
+                    <i class="fas fa-prescription-bottle-alt fa-3x text-muted"></i>
+                    <p>No prescriptions found.</p>
+                </div>
+            }
+            else
+            {
+                <div class="row">
+                    @foreach (var rx in prescriptions)
+                    {
+                        <div class="col-md-6">
+                            <div class="portal-card prescription-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h4>@rx.Medication</h4>
+                                    <span style="color:white !important"class="badge bg-success">@rx.Status</span>
+                                </div>
+                                <p style="color:black !important"><strong style="color:black !important">Dosage:</strong> @rx.Dosage</p>
+                                <p style="color:black !important"><strong style="color:black !important">Refills:</strong> @rx.RefillsRemaining left</p>
+                                <p style="color:black !important"><strong style="color:black !important">Doctor:</strong> @rx.Prescriber</p>
+                                <small class="text-muted">Expires: @rx.ExpiresOn.ToShortDateString()</small>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </section>
+</div>
+<Footer></Footer>
+
+@code {
+    private List<Prescription> prescriptions;
+    [Parameter]
+    public int PatientId { get; set; } // or get from query/user session
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        try
+        {
+            prescriptions = await  patientservice.GetAllPrescriptions(PatientId);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading prescriptions: {ex.Message}");
+            prescriptions = new List<Prescription>();
+        }
+    }
+}

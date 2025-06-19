@@ -1,0 +1,148 @@
+﻿@page "/addprescription/{PatientId:int}/{DoctorId:int}"
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject ILogger<AddPrescription> Logger
+@inject DoctorService doctorservice
+@inject PatientService patientservice
+@using HealWell.Services
+@using HealWell.Models
+<PageTitle>Add Prescription</PageTitle>
+<Header />
+
+<div class="prescription-container" style="background-color:#FAFAFA; padding: 2rem 0;">
+    <div class="container">
+        <div class="prescription-card">
+            <h2 style="color: #00897b;">
+                <i class="fas fa-prescription"></i> New Prescription
+            </h2>
+
+            <EditForm Model="@prescription" OnValidSubmit="@HandleValidSubmit">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div class="form-row">
+                    <div class="form-group col-md-8">
+                        <label>Medication</label>
+                        <InputText class="form-control" @bind-Value="prescription.Medication" />
+                        <ValidationMessage For="@(() => prescription.Medication)" />
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label>Dosage</label>
+                        <InputText class="form-control" @bind-Value="prescription.Dosage" />
+                        <ValidationMessage For="@(() => prescription.Dosage)" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>Refills Remaining</label>
+                        <InputNumber class="form-control" @bind-Value="prescription.RefillsRemaining" />
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label>Expiration Date</label>
+                        <InputDate class="form-control" @bind-Value="prescription.ExpiresOn" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Additional Instructions</label>
+                    <InputTextArea class="form-control" @bind-Value="prescription.Status" rows="3" />
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-save" disabled="@isProcessing">
+                        @if (isProcessing)
+                        {
+                            <span><i class="fas fa-spinner fa-spin"></i> Saving...</span>
+                        }
+                        else
+                        {
+                            <span><i class="fas fa-save"></i> Save Prescription</span>
+                        }
+                    </button>
+                    <button type="button" class="btn-cancel" @onclick="Cancel">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+<Footer />
+
+@code {
+    [Parameter]
+    public int PatientId { get; set; }
+    [Parameter]
+    public int DoctorId { get; set; }
+
+    private Prescription prescription = new();
+    private bool isProcessing = false;
+    private Doctor doctor;
+    private Patient patient;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        doctor = await doctorservice.GetById(DoctorId);
+        patient = await patientservice.GetById(PatientId);
+        prescription.Patient = patient;
+        prescription.Doctor = doctor;
+        prescription.PatientId = PatientId;
+        prescription.ExpiresOn = DateTime.Today.AddMonths(3);
+        prescription.Prescriber = doctor.Name;
+        prescription.Status = "justadded";
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        isProcessing = true;
+        try
+        {
+            var response = await patientservice.AddPrescription(prescription);
+            if (response)
+            {
+                NavigationManager.NavigateTo($"/prescriptions/{PatientId}");
+            }
+            else
+            {
+                
+                Logger.LogError($"Prescription creation failed");
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error creating prescription");
+        }
+        finally
+        {
+            isProcessing = false;
+        }
+    }
+
+    private void Cancel()
+    {
+        NavigationManager.NavigateTo($"/records/{PatientId}");
+    }
+
+    // public class Prescription
+    // {
+    //     public int PatientId { get; set; }
+
+    //     [Required(ErrorMessage = "Medication is required")]
+    //     public string Medication { get; set; } = string.Empty;
+
+    //     [Required(ErrorMessage = "Dosage is required")]
+    //     public string Dosage { get; set; } = string.Empty;
+
+    //     [Range(0, 12, ErrorMessage = "Refills must be between 0 and 12")]
+    //     public int RefillsRemaining { get; set; } = 1;
+
+    //     [Required]
+    //     public DateTime ExpiresOn { get; set; }
+
+    //     public string Status { get; set; } = "Take once daily as directed";
+    // }
+}

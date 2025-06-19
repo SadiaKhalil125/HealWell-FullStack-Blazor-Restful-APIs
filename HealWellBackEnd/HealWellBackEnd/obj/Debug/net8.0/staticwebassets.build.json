@@ -1,0 +1,20 @@
+{
+  "Version": 1,
+  "Hash": "2GnmW20xVg1nJ3pvbRljFpDaiTWiY7bmvxnxKGrGVcI=",
+  "Source": "HealWellBackEnd",
+  "BasePath": "_content/HealWellBackEnd",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "HealWellBackEnd\\wwwroot",
+      "Source": "HealWellBackEnd",
+      "ContentRoot": "D:\\SCD\\HealWellBackEnd\\HealWellBackEnd\\wwwroot\\",
+      "BasePath": "_content/HealWellBackEnd",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [],
+  "Endpoints": []
+}
